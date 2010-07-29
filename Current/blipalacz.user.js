@@ -19,11 +19,14 @@
 // @include        http://rdir.pl/*/stats
 // @include        http://help.gadu-gadu.pl/errors/blip/
 // @include        http://czydziala.gadu-gadu.pl/blip/
-// @require	       http://userscripts.org/scripts/source/67066.user.js
+// @include        http://blip.pl/updates/search?*
+// @require		   https://downloads.sourceforge.net/project/blipalacz/INNE%20-%20Wymagane%20pliki/jQuery.user.js?use_mirror=master&ts=1280433517
 // ==/UserScript==
 
 // ZABRANIA SIE DOKONYWANIA JAKICHKOLWIEK MODYFIKACJI KODU BEZ ZGODY AUTORA //
 // MODYFIKACJA KODU STANOWI NARUSZENIE LICENCJI ORAZ BEDZIE SCIGANA //
+
+// Stare jQuery: http://userscripts.org/scripts/source/67066.user.js
 
 // CORE (nieszyfrowane) //
 function jQueryIsReady($) {
@@ -125,8 +128,8 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '2.11a';
-verb = 296;
+ver = '3.1';
+verb = 3001;
 
 if(GM_getValue('lastverremind') == undefined) {
 	GM_setValue('lastverremind',verb);
@@ -142,42 +145,82 @@ if(document.location.href == 'http://blip.pl/dashboard?dev') {
 reblipi = GM_getValue('reblipi'); if(reblipi == undefined) { reblipi = 1; GM_setValue('reblipi',1); }
 
 if(document.location.href.match('http://rdir.pl/') && reblipi == 1) {
-	 url = document.documentURI
-	    rdir_id = url.substring(15, url.lastIndexOf("/"))
-	    reblipi_url = "http://re.blipi.pl/" + rdir_id
+ url = document.documentURI;
+    rdir_id = url.substring(15, url.lastIndexOf("/"));
+    reblipi_url = "http://re.blipi.pl/" + rdir_id;
 
-	    GM_addStyle("#loading { display: block; margin: 1em auto; }")
-	    GM_addStyle(".avatar {width: 15px; height: 15px;} br {margin-bottom: 1em;} .show { font-size: smaller; }")
-	    
-	    box = $$(".module")[0]
+    GM_addStyle("#loading { display: block; margin: 1em auto; }");
+    GM_addStyle(".avatar {margin: 0 0.25em 0 0.5em; vertical-align:middle;} br {margin-bottom: 1em;} ");
+    
+    box = document.evaluate('//*[@class="module"]', 
+                            document, null, 
+                            XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, 
+                            null).snapshotItem(0); 
 
-	    header = document.createElement('h3')
-	    header.innerHTML = 'Magia RE.BLIPI <a href="' + reblipi_url + '">' + reblipi_url + '</a>'
+    header = document.createElement('h3');
+    header.innerHTML = 'Magia reblipi <a href="' + reblipi_url + '">' + 
+                       reblipi_url + '</a>';
 
-	    loading = document.createElement('img')
-	    loading.setAttribute('id', 'loading')
-	    loading.setAttribute('src', 'http://blip.pl/images/ajax-loading.gif')
+    loading = document.createElement('img');
+    loading.setAttribute('id', 'loading');
+    loading.setAttribute('src', 'http://blip.pl/images/ajax-loading.gif');
 
-	    box.appendChild(header)
-	    box.appendChild(loading)
+    box.appendChild(header);
+    box.appendChild(loading);
 
-	    GM_xmlhttpRequest({
-	        method: "GET",
-	        url: "http://re.blipi.pl/" + rdir_id,
-	        onload: function(response) {
-	            var responseXML = document.createElement('html')
-	            responseXML.innerHTML = response.responseText
+    GM_xmlhttpRequest({
+        method: "GET",
+        url: "http://re.blipi.pl/" + rdir_id,
+        onload: function(response) {
+            var responseXML = document.createElement('html');
+            responseXML.innerHTML = response.responseText;
+            
+            results = document.createElement('ul');
+            addedBy = document.createElement('li');
+            addedBy.innerHTML = 'Dodane przez: <br />';
+            results.appendChild(addedBy);
+            
+            quotes = document.evaluate('//li[@class="content"]/p', 
+                                 responseXML, null, 
+                                 XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, 
+                                 null); 
+            
+            for (i=0; i < quotes.snapshotLength ; i++) {
+                quote = quotes.snapshotItem(i);
+                item = document.createElement('li');
+                
+                link = quote.parentNode.parentNode
+                            .getElementsByTagName('a')[1];
+                
+                img = quote.parentNode.parentNode
+                           .getElementsByTagName('img')[0];
+                
+                name = img.getAttribute('title');
+                name = name.substring(1, name.length);
+                
+                image = document.createElement('a');
+                image.setAttribute('href', 'http://blip.pl/users/'+ name +'/dashboard');
+                image.appendChild(img);
+                
+                author = document.createElement('a');
+                author.setAttribute('href', 'http://blip.pl/users/'+ name +'/dashboard');
+                author.innerHTML = name;
+                
+                content = document.createElement('span');
+                content.innerHTML = ': ' + quote.innerHTML
+                
+                item.appendChild(link);
+                item.appendChild(image);
+                item.appendChild(author);
+                item.appendChild(content);
+                item.appendChild(document.createElement('br'));
+                
+                results.appendChild(item);
+            }
+            box.replaceChild(results, loading);
+        }
+    });
 
-	            results = document.createElement('ul');
-	            
-	            active = $$("tr", responseXML)
-	            last_td = active[active.length-1];
-	            if (last_td.childNodes[1].className != "head") {
-	                results.innerHTML = '<li class="normal margin"><li>' + last_td.innerHTML + "</li>"
-	            }
-	            box.replaceChild(results, loading)        
-	        }
-	    });
 }
 // EOF MAGIA //
 
@@ -209,6 +252,13 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	} else {
 		counter = counter + 1;
 		GM_setValue('counter',counter);
+		
+		if(GM_getValue('ver3') == undefined) {
+		alert('====== WAZNE !!! ======= \r\n Witaj! Otrzymujesz ten komunikat poniewaz zaktualizowales BLIPalacza do wersji 3.0! \r\n\r\n Nie jest to zwykla aktualizacja dlatego przeczytaj prosze ten komunikat do konca. \r\n W wersji obecnie uzywanej przez Ciebie zastosowalem nowe mechanizmy dzialania.\r\n Od teraz BLIPalacz dziala tylko gdy otrzyma cos na kokpit. Spowodowalo to spadek generowanego obciazenia CPU do prawie zerowego w trybie spoczynku. \r\n Testerzy wykonali testy tej wersji jednak nie daje to 100% pewnosci, ze wszystko gra. \r\n W razie problemow prosze o kontakt: support@kubofonista.net');
+		Message('Wiecej o zainstalowanej wersji dowiesz sie na <a title="http://kubofonista.net/blipalacz-3-0-jakie-powazne-zmiany-niesie" href="http://kubofonista.net/blipalacz-3-0-jakie-powazne-zmiany-niesie" target="_blank">http://kubofonista.net/blipalacz-3-0-jakie-powazne-zmiany-niesie</a>');
+		GM_setValue('ver3','ok');
+		}
+		
 	}
 	
 	if(obswarn == undefined) {
@@ -233,9 +283,10 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	wylwaz = GM_getValue('wylwaz'); if(wylwaz == undefined) { wylwaz = 0; GM_setValue('wylwaz',0); }
 	plonk = GM_getValue('plonk'); if(plonk == undefined) { plonk = 1; GM_setValue('plonk',1); }
 	trzyszesc = GM_getValue('trzyszesc'); if(trzyszesc == undefined) { trzyszesc = 1; GM_setValue('trzyszesc',1); }
+	kontynuuj = GM_getValue('kontynuuj'); if(kontynuuj == undefined) { kontynuuj = 1; GM_setValue('kontynuuj',1); }
 	countero = GM_getValue('countero'); if(countero == undefined) { countero = 1; GM_setValue('countero',1); }
 	
-	// Prima Aprillis //
+	/* // Prima Aprillis //
 	if(document.location.href == 'http://blip.pl/dashboard?blipalacz=stopprima') {
 		prima = 0;
 		GM_setValue('prima',0);
@@ -243,6 +294,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 		prima = GM_getValue('prima'); if(prima == undefined) { prima = 1; GM_setValue('prima',1); }
 	}
 	// EoF Prima Aprillis
+	*/
 	
 	hc = GM_getValue('hc'); if(hc == undefined) { hc = 1; GM_setValue('hc',1); }
 	
@@ -276,6 +328,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	trzyszescc = AktywnoscDodatkow('trzyszesc',trzyszesc);
 	counteroo = AktywnoscDodatkow('countero',countero);
 	reblipii = AktywnoscDodatkow('reblipi',reblipi);
+	kontynuujj = AktywnoscDodatkow('kontynuuj',kontynuuj);
 	
 	hcc = AktywnoscDodatkow('hc',hc);
 	
@@ -317,8 +370,13 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	} else {
 		$('#observed-and-observing-box').append(copy);
 	}
+	
+	if(document.location.href == 'http://blip.pl/users/blipalacz/dashboard' || document.location.href == 'http://www.blip.pl/users/blipalacz/dashboard') {
+	darowizna = '<br /><br /><br /><center><div style="font-family:Verdana,sans; background-color:#CD9B82; letter-spacing:2px; padding-bottom:0; text-transform:none; padding-left:6px; width:100%"><center>Witaj na oficjalnym profilu BLIPalacza - dodatku ktorego uzywasz.<br /><br />Jesli cenisz sobie ten dodatek zaobserwuj prosze ten profil - pomoze mi to lepiej zliczyc uzytkownikow. <br /><br />Jesli bardzo go lubisz i chcesz wspomoc:<br /><form action="https://www.paypal.com/cgi-bin/webscr" method="post"><input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="hosted_button_id" value="LS9TCTPXR7KEU"><input type="image" src="https://www.paypal.com/pl_PL/PL/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal — Płać wygodnie i bezpiecznie"><img alt="" border="0" src="https://www.paypal.com/pl_PL/i/scr/pixel.gif" width="1" height="1"></form></center></div></center>';
+	$('#quick-jump-box').append(darowizna);
+	}
 	$('#blipalacz-box').fadeIn();
-	setting = '<b>Aktywnosc dodatkow:</b> <br /> Kolorowanie tagow '+kts+'<br />Czytelniejsza bliposfera '+bs+'<br /> Cytaty w bliposferze '+bsc+'<br/> Cytaty na kokpicie '+ctk+'<br />Przybornik w powiadomieniach '+lnc+'<br />Przybornik w cytatach '+cc+'<br />Integracja z blipi.pl '+bpi+'<br />Ranking na kokpicie (obok nicka) '+bpir+'<br />Kokpit: Zamiana [link] na adres '+lkp+'<br />Linkowanie komunikatorow '+ko+'<br />Usuniecie boxa Polecamy '+upl+'<br />Powrot na kokpit z oponki '+bc+'<br />Menedzer kont blipowych '+me+'<br />Usuwanie tag clouda z kokpitow '+hcc+'<br /> Integracja z 3600.pl '+trzyszescc+'<br /> Ignor (plonk) pod blipnieciem '+plonkk+'<br /> Licznik obserwowanych online '+counteroo+' <br /> Magia REBLIPI w stats '+reblipii+'<br /> <p style="font-size:5px;">Ukryj boks wazne od BLIPalacza '+wylwazz+'</p><a href="#" id="blipalacz-polecamy">Wyswietl raz Polecamy &raquo;</a>';
+	setting = '<b>Aktywnosc dodatkow:</b> <br /> Kolorowanie tagow '+kts+'<br />Czytelniejsza bliposfera '+bs+'<br /> Cytaty w bliposferze '+bsc+'<br/> Cytaty na kokpicie '+ctk+'<br />Przybornik w powiadomieniach '+lnc+'<br />Przybornik w cytatach '+cc+'<br />Integracja z blipi.pl '+bpi+'<br />Ranking na kokpicie (obok nicka) '+bpir+'<br />Kokpit: Zamiana [link] na adres '+lkp+'<br />Linkowanie komunikatorow '+ko+'<br />Usuniecie boxa Polecamy '+upl+'<br />Powrot na kokpit z oponki '+bc+'<br />Menedzer kont blipowych '+me+'<br />Usuwanie tag clouda z kokpitow '+hcc+'<br /> Integracja z 3600.pl '+trzyszescc+'<br /> Ignor (plonk) pod blipnieciem '+plonkk+'<br /> Licznik obserwowanych online '+counteroo+' <br /> Magia REBLIPI w stats '+reblipii+'<br />Kontynuuj przy wlasnych dm/pm '+kontynuujj+'<br /> <p style="font-size:5px;">Ukryj boks wazne od BLIPalacza '+wylwazz+'</p><a href="#" id="blipalacz-polecamy">Wyswietl raz Polecamy &raquo;</a>';
 	if($("#blipalacz-sets") == undefined) {
 		// stop!
 	} else {
@@ -399,6 +457,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	BindujZmiane('countero');
 	BindujZmiane('hc');
 	BindujZmiane('reblipi');
+	BindujZmiane('kontynuuj');
 	
 	BindujZmianeAlert('wylwaz','Zamierzasz zmienic status boksa wazne wiadomosci BLIPalacza. Zastanow sie czy naprawde Ci on przeszkadza? Zajmuje przeciez niewiele miejsca i to na koncu widgetow (wiec nie przeszkadza) a pozwala autorowi na kontakt z Toba. Jesli go wylaczysz - nie bedziesz wiedzial o dosyc waznych sprawach dotyczacych skryptu. Zachecam wtedy do obserwacji ^blipalacz. A jesli nie chcesz takze obserwowac, to Twoja sprawa jednak nie wspomagasz nas nie obserwujac :(','Dzieki za wlaczenie tego boksa. Mysle ze nie powinien Ci on przeszkadzac :)');
 	
@@ -495,11 +554,14 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 
     	    });*/
 	
-	/*if(document.getElementById('recommended-users') == undefined) {
+	if(document.getElementById('recommended-0-tab') == undefined) {
 		// do nothing
 	} else {
-		//document.getElementById('recommended-users').innerHTML = '<li id="recommended-user-406641"><a title="BLIPalacz" class="recommended-user-avatar" href="/users/blipalacz/dashboard"><img src="http://static0.blip.pl/user_generated/avatars/406641_nano.jpg" alt="BLIPalacz - avatar"/></a></li>'+document.getElementById('recommended-users').innerHTML;
-	}*/
+		if (document.getElementById('tracked-user-77810') == undefined) {
+			poprzre = $('#recommended-0-tab > ul').html();
+			$('#recommended-0-tab > ul').html('<li id="recommended-user-77810"><a title="BLIPalacz" class="recommended-user-avatar" href="/users/blipalacz/dashboard"><img src="http://static1.blip.pl/user_generated/avatars/724691_nano.jpg" alt="BLIPalacz - avatar"/></a></li>'+poprzre);
+		}
+	}
 	
 	if(usunpolecamy == 1) {
 		GM_addStyle('#recommended-box {display:none; } #beginners-recommended-box {display:none; }');
@@ -546,7 +608,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
     			cytowan = json['citations'];
     			wzmianek = json['mentions'];
     			
-    			if(zm === 0 || zm == undefined) {
+    			if(zm == 0 || zm == undefined) {
     				zmiana = '';
     			} else {
     				if(zm > 0) {
@@ -558,7 +620,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
     				}
     			}
   		
-			if(zms === 0 | zms == undefined) {
+			if(zms == 0 | zms == undefined) {
 				zmianas = '';
 			} else {
 				if(zms > 0) {
@@ -630,14 +692,14 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 		        		    	
 		        		    	if(blipijson == '') {
 		        		    	blipizc = 'Niestety brak wynikow dla tego zapytania. <br />Skad ta wyszukiwarka? To magia <a href="http://blipi.pl/?referer=blipalacz" done="1" target="_blank">BLIPI.PL</a> i <a href="http://kubofonista.net/blipalacz" done="1" target="_blank">BLIPalacza</a>';
-		        		    	blipiz = '<li class="update status" id="update-blipi0"><div class="background-top"> </div><div class="container clearfix"><a class="author" href="http://blip.pl/users/blipi/dashboard"><img src="http://static0.blip.pl/user_generated/avatars/337162_pico.jpg"/></a><div class="content"><span class="nick"><a href="http://blip.pl/users/blipi/dashboard">blipi</a>:</span> '+blipizc+' </div> <div class="toolbar clearfix clearer"> <span class="clock"> <span style="" class="created-ago-calculated">Przed chwila</span> </span> <span class="transport">, przez <a target="_blank" href="http://kubofonista.net/blipalacz">BLIPalacz</a> & <a target="_blank" href="http://blipi.pl">BLIPI.PL</a></span> <span class="divider">  </span> <a onclick="window.BLIP.dashboardInput.respondTo(\'blipi\');; return false;" href="#" class="respond">odpowiedz</a> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">cytuj</span> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">link</span> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">usun</span></div></div><div class="background-bottom"></div> </li>'+beforebody;
+		        		    	blipiz = '<li class="update status" id="update-blipi0"><div class="background-top"> </div><div class="container clearfix"><a class="author" href="http://blip.pl/users/blipi/dashboard"><img src="http://static3.blip.pl/user_generated/avatars/997106_pico.jpg"/></a><div class="content"><span class="nick"><a href="http://blip.pl/users/blipi/dashboard">blipi</a>:</span> '+blipizc+' </div> <div class="toolbar clearfix clearer"> <span class="clock"> <span style="" class="created-ago-calculated">Przed chwila</span> </span> <span class="transport">, przez <a target="_blank" href="http://kubofonista.net/blipalacz">BLIPalacz</a> & <a target="_blank" href="http://blipi.pl">BLIPI.PL</a></span> <span class="divider">  </span> <a onclick="window.BLIP.dashboardInput.respondTo(\'blipi\');; return false;" href="#" class="respond">odpowiedz</a> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">cytuj</span> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">link</span> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">usun</span></div></div><div class="background-bottom"></div> </li>'+beforebody;
 		        		    	document.getElementById('dashboard-updates').innerHTML = blipiz;
 		        		    	$('#dashboard-updates').fadeTo("slow", 1.0);
 		        		    	$('#dashboard-loading').attr('style','visibility:hidden');
 		        		    	return false;
 		        		    	} else {
 		        		    	blipizc = 'Ponizsze wyszukiwanie to magia <a href="http://blipi.pl/?referer=blipalacz" done="1" target="_blank">BLIPI.PL</a> w polaczeniu z <a href="http://kubofonista.net/blipalacz" done="1" target="_blank">BLIPalaczem</a><br />';
-		        		    	blipiz = '<li class="update status" id="update-blipi0"><div class="background-top"> </div><div class="container clearfix"><a class="author" href="http://blip.pl/users/blipi/dashboard"><img src="http://static0.blip.pl/user_generated/avatars/337162_pico.jpg"/></a><div class="content"><span class="nick"><a href="http://blip.pl/users/blipi/dashboard">blipi</a>:</span> '+blipizc+' </div> <div class="toolbar clearfix clearer"> <span class="clock"> <span style="" class="created-ago-calculated">Przed chwila</span> </span> <span class="transport">, przez <a target="_blank" href="http://kubofonista.net/blipalacz">BLIPalacz</a> & <a target="_blank" href="http://blipi.pl">BLIPI.PL</a></span> <span class="divider">  </span> <a onclick="window.BLIP.dashboardInput.respondTo(\'blipi\');; return false;" href="#" class="respond">odpowiedz</a> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">cytuj</span> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">link</span> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">usun</span></div></div><div class="background-bottom"></div> </li>';
+		        		    	blipiz = '<li class="update status" id="update-blipi0"><div class="background-top"> </div><div class="container clearfix"><a class="author" href="http://blip.pl/users/blipi/dashboard"><img src="http://static3.blip.pl/user_generated/avatars/997106_pico.jpg"/></a><div class="content"><span class="nick"><a href="http://blip.pl/users/blipi/dashboard">blipi</a>:</span> '+blipizc+' </div> <div class="toolbar clearfix clearer"> <span class="clock"> <span style="" class="created-ago-calculated">Przed chwila</span> </span> <span class="transport">, przez <a target="_blank" href="http://kubofonista.net/blipalacz">BLIPalacz</a> & <a target="_blank" href="http://blipi.pl">BLIPI.PL</a></span> <span class="divider">  </span> <a onclick="window.BLIP.dashboardInput.respondTo(\'blipi\');; return false;" href="#" class="respond">odpowiedz</a> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">cytuj</span> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">link</span> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">usun</span></div></div><div class="background-bottom"></div> </li>';
 		        		    	}
 		        		    	
 		        		    	
@@ -654,13 +716,14 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 		        		    	}
 		        		    	
 		        		    	blipizc = 'Chcesz zobaczyc wiecej statusow? <a done="1" href="http://blipi.pl/?q='+szukane+'&referer=blipalacz" title="http://blipi.pl/?q='+szukane+'&referer=blipalacz" target="_blank">Kliknij i przejdz na strone BLIPI &raquo;</a><br /><font size="1">Zobacz takze: <a href="http://stats.blipi.pl/?referer=blipalacz" target="_blank" done="1">Statystyki &raquo;</a> oraz <a href="http://top.blipi.pl/?referer=blipalacz" target="_blank" done="1">TOP100 BLIPowiczow &raquo;</a></font>';
-		        		    	blipiz = blipiz+'<li class="update status" id="update-blipi00"><div class="background-top"> </div><div class="container clearfix"><a class="author" href="http://blip.pl/users/blipi/dashboard"><img src="http://static0.blip.pl/user_generated/avatars/337162_pico.jpg"/></a><div class="content"><span class="nick"><a href="http://blip.pl/users/blipi/dashboard">blipi</a>:</span> '+blipizc+' </div> <div class="toolbar clearfix clearer"> <span class="clock"> <span style="" class="created-ago-calculated">Przed chwila</span> </span> <span class="transport">, przez <a target="_blank" href="http://kubofonista.net/blipalacz">BLIPalacz</a> & <a target="_blank" href="http://blipi.pl">BLIPI.PL</a></span> <span class="divider">  </span> <a onclick="window.BLIP.dashboardInput.respondTo(\'blipi\');; return false;" href="#" class="respond">odpowiedz</a> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">cytuj</span> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">link</span> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">usun</span></div></div><div class="background-bottom"></div> </li>';
+		        		    	blipiz = blipiz+'<li class="update status" id="update-blipi00"><div class="background-top"> </div><div class="container clearfix"><a class="author" href="http://blip.pl/users/blipi/dashboard"><img src="http://static3.blip.pl/user_generated/avatars/997106_pico.jpg"/></a><div class="content"><span class="nick"><a href="http://blip.pl/users/blipi/dashboard">blipi</a>:</span> '+blipizc+' </div> <div class="toolbar clearfix clearer"> <span class="clock"> <span style="" class="created-ago-calculated">Przed chwila</span> </span> <span class="transport">, przez <a target="_blank" href="http://kubofonista.net/blipalacz">BLIPalacz</a> & <a target="_blank" href="http://blipi.pl">BLIPI.PL</a></span> <span class="divider">  </span> <a onclick="window.BLIP.dashboardInput.respondTo(\'blipi\');; return false;" href="#" class="respond">odpowiedz</a> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">cytuj</span> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">link</span> <span class="divider">&nbsp; | &nbsp;</span> <span class="close">usun</span></div></div><div class="background-bottom"></div> </li>';
 		        		    	
 		        		    	$('#dashboard-loading').attr('style','visibility:hidden');
 		        		    	$('#dashboard-updates').html(blipiz);
 		        		    	$('#dashboard-updates').fadeTo("slow", 1.0);
 		        		    	//document.getElementById('dashboard-updates').innerHTML = blipiz;
-		        		    	
+		        		    	Dopal(0);
+								if(kolorowanietagow == 1) {colorTags(); }
 		        		    	
 		        		    }
 		        		});
@@ -703,7 +766,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 					top = top+rank+'. <a href="http://blip.pl/users/'+osoba+'/dashboard">^'+osoba+'</a> - '+trackedby+' obserwujacych <br />';
 				}
 					$('#dashboard-loading').attr('style','visibility:hidden');
-		    		Message('TOP 100 os�b na BLIPie: <br />'+top+'<br />Chcesz zobaczyc wiecej danych o rankingu? <a done="1" href="http://top.blipi.pl?referer=blipalacz" title="http://top.blipi.pl?referer=blipalacz" target="_blank">Kliknij i przejdz na strone BLIPI &raquo;</a>');
+		    		Message('TOP 100 osob na BLIPie: <br />'+top+'<br />Chcesz zobaczyc wiecej danych o rankingu? <a done="1" href="http://top.blipi.pl?referer=blipalacz" title="http://top.blipi.pl?referer=blipalacz" target="_blank">Kliknij i przejdz na strone BLIPI &raquo;</a>');
 		    }
 		});
 		
@@ -712,7 +775,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	
 	
 
-function Dopal() {
+function Dopal(iled) {
 	if(document.location.href == 'http://blip.pl/bliposphere' || document.location.href == 'http://blip.pl' || document.location.href == 'http://www.blip.pl/bliposphere' || document.location.href == 'http://www.blip.pl') {
 		if(bliposfera == 1 || bliposferacytat == 1) {
 		licznik = $(".body").length;
@@ -730,11 +793,31 @@ function Dopal() {
 		}
 		}
 	} else {
-		
 	
+		if(kontynuuj == 1) {	
+			jQuery('span.respond').each(function(e, v){
+				ob = $(v);
+				nicks = ob.parent().parent().find('span.nick');
+				pm = ob.parent().parent().find('span.private-mark');
+				for(i=0; i<nicks.length; i++) {
+					a = jQuery(nicks[i]).find('a');
+						if (a.length == 2) {
+						nick_dmpm = a.eq(1).text();
+						if(pm.length == 1) {
+							body = "<a onclick=\"window.BLIP.dashboardInput.respondTo('"+nick_dmpm+"',true);; return false;\" href=\"#\" class=\"respond\">kontynuuj</a>";
+						} else {
+							body = "<a onclick=\"window.BLIP.dashboardInput.respondTo('"+nick_dmpm+"',false);; return false;\" href=\"#\" class=\"respond\">kontynuuj</a>";
+						}
+						ob.replaceWith(body);
+						}
+				}
+			});
+		}
+		
+
 		if(linkinotice == 1) {
 		
-		licznik3 = $(".content > .notice").length;
+		if(iled == 0){ licznik3 = $(".content > .notice").length; } else { licznik3 = 2; }
 		for(i=0;i<licznik3;i++) {
 			if($(".content > .notice")[i].innerHTML.indexOf('Odpowiedz') == -1) {
 			komu = $(".content > .notice")[i];
@@ -766,8 +849,7 @@ function Dopal() {
 
 	if(cytatykokpit == 1 || linkikokpit == 1) {
 		
-	licznik = $(".content > a").length;
-
+	if(iled==0){ licznik = $(".content > a").length; } else { licznik = 1; }
 	for(i=0;i<licznik;i++) {
 	
 	if($(".content > a")[i].getAttribute("done") != 1) {
@@ -833,7 +915,7 @@ function Dopal() {
 	
 	}
 	
-	licznik2 = $(".notice > a").length;
+	if(iled==0){licznik2 = $(".notice > a").length; } else { iled = 1; }
 
 	for(i=0;i<licznik2;i++) {
 	title = $(".notice > a")[i].getAttribute("title");
@@ -851,7 +933,7 @@ function Dopal() {
 	
 	if(komunikatory == 1) {
 	
-	licznik3 = $(".content").length;
+	if(iled==0){licznik3 = $(".content").length;} else { licznik3 = 0;}
 
 	for(i=0;i<licznik3;i++) {
 	if($(".content")[i].getAttribute('done') == 1) {
@@ -865,7 +947,7 @@ function Dopal() {
 	
 	if(blipi == 1 || plonk == 1) {
 		container = $(".container");
-		licznik = container.length;
+		if(iled==0){licznik = container.length; } else { licznik = 1; }
 		
 		for(i=0;i<licznik;i++) {
 			cont = $(".container > .toolbar")[i].innerHTML;
@@ -972,7 +1054,7 @@ function $$(xpath,root) {
 	        $$('#online_counter')[0].innerHTML = ''
 	    }
 	    
-	    setTimeout(count_online, 50)
+	    setTimeout(count_online, 3000)
 	}
 
 var fgColors = {};
@@ -1090,9 +1172,28 @@ $(document).ready(function() {
 			".tag, .innerTag { border-style:solid; font-weight:normal; }"+
 			".content .tag { white-space:nowrap; }"+
 			"div#content ul#dashboard-updates li.update div.container div.toolbar span.transport{width: 140px !important;} ");
-	GM_addStyle("div[style=\"border: 2px dashed rgb(192, 192, 192); padding: 5px; background-color: rgb(238, 238, 238); font-size: 10pt; line-height: 10pt;\"] {\n      border: 1px solid lightgray !important;\n      margin-right: 2px !important;\n      margin-bottom: 5px !important; \n  }\n  div[style=\"border: 2px dashed rgb(192, 192, 192); padding: 5px; background-color: rgb(238, 238, 238); font-size: 10pt; line-height: 10pt;\"] > div{\n      background: #EFEFEF url(http://static1.blip.pl/images/status-toolbar.png) top left repeat-x !important;\n      margin: -5px !important;\n      margin-top: 5px !important;\n      padding: 2px 5px 2px 2px !important;\n      opacity: 0.5 !important;\n  }\n  div[style=\"border: 2px dashed rgb(192, 192, 192); padding: 5px; background-color: rgb(238, 238, 238); font-size: 10pt; line-height: 10pt;\"] > div > a {\n      text-transform: lowercase !important;\n      color: black !important;\n  }\n  div.photo, div.audio, div.video {\n      border: none !important;\n  }\n  div.notice > div {\n      border: 1px solid lightgray !important;\n      border-bottom: none !important;\n  }\n  div.notice > div[style=\"padding-right: 20px; font-size: 10px;\"] {\n      background: white url(http://static1.blip.pl/images/status-toolbar.png) top left repeat-x !important;\n      border-top: none !important;\n      margin-right: 20px !important;\n      opacity: 0.5 !important;\n      color: black !important;\n      padding: 1px 5px 0 0 !important;\n      border-color: #A7A7A7 !important;\n      border-bottom: 1px solid #A7A7A7 !important;\n      margin-bottom: 2px !important; \n  }\n  div.notice > div[style=\"padding-right: 20px; font-size: 10px;\"] > a {\n      color: black !important;\n      text-transform: lowercase !important;\n  }");
+	
+	var css = "div[style=\"background-color: rgb(238, 238, 238); border: 2px dashed rgb(192, 192, 192); font-size: 10pt; line-height: 10pt; padding: 5px;\"] {\n      border: 1px solid lightgray !important;\n      margin-right: 2px !important;\n      margin-bottom: 5px !important; \n  }\n  div[style=\"background-color: rgb(238, 238, 238); border: 2px dashed rgb(192, 192, 192); font-size: 10pt; line-height: 10pt; padding: 5px;\"] > div{\n      background: #EFEFEF url(http://static1.blip.pl/images/status-toolbar.png) top left repeat-x !important;\n      margin: -5px !important;\n      margin-top: 5px !important;\n      padding: 2px 5px 2px 2px !important;\n      opacity: 0.5 !important;\n  }\n  div[style=\"background-color: rgb(238, 238, 238); border: 2px dashed rgb(192, 192, 192); font-size: 10pt; line-height: 10pt; padding: 5px;\"] > div > a {\n      text-transform: lowercase !important;\n      color: black !important;\n  }\n  div.photo, div.audio, div.video {\n      border: none !important;\n  }\n  div.notice > div {\n      border: 1px solid lightgray !important;\n      border-bottom: none !important;\n  }\n  div.notice > div[style=\"padding-right: 20px; font-size: 10px;\"] {\n      background: white url(http://static1.blip.pl/images/status-toolbar.png) top left repeat-x !important;\n      border-top: none !important;\n      margin-right: 20px !important;\n      opacity: 0.5 !important;\n      color: black !important;\n      padding: 1px 5px 0 0 !important;\n      border-color: #A7A7A7 !important;\n      border-bottom: 1px solid #A7A7A7 !important;\n      margin-bottom: 2px !important; \n  }\n  div.notice > div[style=\"padding-right: 20px; font-size: 10px;\"] > a {\n      color: black !important;\n      text-transform: lowercase !important;\n  }";
+	
+	//GM_addStyle("div[style=\"border: 2px dashed rgb(192, 192, 192); padding: 5px; background-color: rgb(238, 238, 238); font-size: 10pt; line-height: 10pt;\"] {\n      border: 1px solid lightgray !important;\n      margin-right: 2px !important;\n      margin-bottom: 5px !important; \n  }\n  div[style=\"border: 2px dashed rgb(192, 192, 192); padding: 5px; background-color: rgb(238, 238, 238); font-size: 10pt; line-height: 10pt;\"] > div{\n      background: #EFEFEF url(http://static1.blip.pl/images/status-toolbar.png) top left repeat-x !important;\n      margin: -5px !important;\n      margin-top: 5px !important;\n      padding: 2px 5px 2px 2px !important;\n      opacity: 0.5 !important;\n  }\n  div[style=\"border: 2px dashed rgb(192, 192, 192); padding: 5px; background-color: rgb(238, 238, 238); font-size: 10pt; line-height: 10pt;\"] > div > a {\n      text-transform: lowercase !important;\n      color: black !important;\n  }\n  div.photo, div.audio, div.video {\n      border: none !important;\n  }\n  div.notice > div {\n      border: 1px solid lightgray !important;\n      border-bottom: none !important;\n  }\n  div.notice > div[style=\"padding-right: 20px; font-size: 10px;\"] {\n      background: white url(http://static1.blip.pl/images/status-toolbar.png) top left repeat-x !important;\n      border-top: none !important;\n      margin-right: 20px !important;\n      opacity: 0.5 !important;\n      color: black !important;\n      padding: 1px 5px 0 0 !important;\n      border-color: #A7A7A7 !important;\n      border-bottom: 1px solid #A7A7A7 !important;\n      margin-bottom: 2px !important; \n  }\n  div.notice > div[style=\"padding-right: 20px; font-size: 10px;\"] > a {\n      color: black !important;\n      text-transform: lowercase !important;\n  }");
 
-	// PRIMA APRILLIS //
+	if (typeof GM_addStyle != "undefined") {
+	GM_addStyle(css);
+} else if (typeof PRO_addStyle != "undefined") {
+	PRO_addStyle(css);
+} else if (typeof addStyle != "undefined") {
+	addStyle(css);
+} else {
+	var heads = document.getElementsByTagName("head");
+	if (heads.length > 0) {
+		var node = document.createElement("style");
+		node.type = "text/css";
+		node.appendChild(document.createTextNode(css));
+		heads[0].appendChild(node); 
+	}
+}
+	
+	/* // PRIMA APRILLIS //
 	var data = new Date();
 	var m = data.getMonth();
 	var d = data.getDate();
@@ -1106,21 +1207,62 @@ $(document).ready(function() {
 	}
 	
 	// EoF PRIMA APRILLIS
+	*/
 	
-if(kolorowanietagow == 1) {
-colorTags();
-setInterval(colorTags, 1500);
+if(document.location.href.match('http://blip.pl/updates/search?q=')) {
+Paginacja();
+} else {
+	
+function Zapal() {
+if(kolorowanietagow == 1) { colorTags(); }
+Dopal(0);
 }
+
+function Paginacja() {
+if(document.getElementById('page-number').innerHTML == '?') { setTimeout(Paginacja,1000); } else { Zapal(); }
+}
+
+var fp = unsafeWindow.BLIP.Pages.firstPage;
+unsafeWindow.BLIP.Pages.firstPage = function(a,b){
+fp(a,b);
+document.getElementById('page-number').innerHTML = '?';
+Paginacja();
+} 
+
+var p = unsafeWindow.BLIP.Pages.nextPage;
+unsafeWindow.BLIP.Pages.nextPage = function(a,b){
+p(a,b);
+document.getElementById('page-number').innerHTML = '?';
+Paginacja();
+} 
+
+var pp = unsafeWindow.BLIP.Pages.previousPage;
+unsafeWindow.BLIP.Pages.previousPage = function(a,b){
+pp(a,b);
+document.getElementById('page-number').innerHTML = '?';
+Paginacja();
+} 
+	
+var o = unsafeWindow.Element.insert;
+unsafeWindow.Element.insert = function(a,b){
+o(a,b);
+if(document.getElementById('page-number') == undefined) { Zapal(); } else {
+if(document.getElementById('page-number').innerHTML == 1) { Zapal(); }
+}
+} 
+
 
 if(countero == 1 && (adres.match('http://blip.pl/users/') || adres.match('http://blip.pl/tags/') || adres.match('http://blip.pl/dashboard') )) {
 UruchomLCounter();
 }
 
-setInterval(Dopal,1500);
-Dopal();
+Zapal();
 
-setInterval(CounterRefresh,30000);
+
+setInterval(CounterRefresh,60000);
+}
 });
+
 
 
 /* KOMPLETNIE SIE Z TEGO WYCOFUJE NA WASZE ZYCZENIE !!! 
