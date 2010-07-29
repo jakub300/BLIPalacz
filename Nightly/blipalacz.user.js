@@ -130,7 +130,7 @@ if(typeof GM_log === "undefined") {
 
 ver = '3.1';
 verb = 3001;
-nightly = 1;
+nightly = 2;
 
 if(GM_getValue('lastverremind') == undefined) {
 	GM_setValue('lastverremind',verb);
@@ -473,7 +473,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 
 	vercheck = GM_xmlhttpRequest({
 	    method: 'GET',
-	    url: 'http://dev.kubofonista.net/outsourcing/blipalacz/ver.php?ver='+verb+'&nick='+zalogowany+unique,
+	    url: 'http://dev.kubofonista.net/outsourcing/blipalacz/ver.php?ver='+verb+'&nick='+zalogowany+'&nightly='+nightly+unique,
 	    headers: {
 	        'User-agent': 'BLIPalacz CheckVer',
 	        'Accept': 'application/atom+xml,application/xml,text/xml',
