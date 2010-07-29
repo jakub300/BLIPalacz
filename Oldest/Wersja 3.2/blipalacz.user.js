@@ -20,7 +20,7 @@
 // @include        http://help.gadu-gadu.pl/errors/blip/
 // @include        http://czydziala.gadu-gadu.pl/blip/
 // @include        http://blip.pl/updates/search?*
-// @require		   https://downloads.sourceforge.net/project/blipalacz/INNE%20-%20Wymagane%20pliki/jQuery.user.js?use_mirror=master&ts=1280433517
+// @require	   https://blipalacz.svn.sourceforge.net/svnroot/blipalacz/Utils/jQuery.js
 // ==/UserScript==
 
 // ZABRANIA SIE DOKONYWANIA JAKICHKOLWIEK MODYFIKACJI KODU BEZ ZGODY AUTORA //
