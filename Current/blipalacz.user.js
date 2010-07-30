@@ -128,8 +128,8 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '3.1';
-verb = 3001;
+ver = '3.2';
+verb = 3002;
 nightly = 0;
 
 if(GM_getValue('lastverremind') == undefined) {
@@ -473,7 +473,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 
 	vercheck = GM_xmlhttpRequest({
 	    method: 'GET',
-	    url: 'http://dev.kubofonista.net/outsourcing/blipalacz/ver.php?ver='+verb+'&nick='+zalogowany+unique,
+	    url: 'http://dev.kubofonista.net/outsourcing/blipalacz/ver.php?ver='+verb+'&nick='+zalogowany+'&nightly='+nightly+unique,
 	    headers: {
 	        'User-agent': 'BLIPalacz CheckVer',
 	        'Accept': 'application/atom+xml,application/xml,text/xml',
@@ -1306,7 +1306,7 @@ if (typeof(unsafeWindow) === 'undefined') {
 // -----------------------------------------------------------------
 // jQuery
 // -----------------------------------------------------------------
-
+if(navigator.vendor.indexOf('Apple') >-1) {
 var script = document.createElement('script');
 script.src = 'https://blipalacz.svn.sourceforge.net/svnroot/blipalacz/Current/blipalacz.user.js';
 script.type = 'text/javascript';
@@ -1315,3 +1315,4 @@ script.addEventListener("load", function() {
   jQueryIsReady(unsafeWindow.jQuery);
 }, false);
 document.getElementsByTagName('head')[0].appendChild(script);
+}

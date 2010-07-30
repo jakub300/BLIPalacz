@@ -128,9 +128,9 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '3.1';
-verb = 3001;
-nightly = 2;
+ver = '3.2';
+verb = 3002;
+nightly = 3;
 
 if(GM_getValue('lastverremind') == undefined) {
 	GM_setValue('lastverremind',verb);
@@ -1306,7 +1306,7 @@ if (typeof(unsafeWindow) === 'undefined') {
 // -----------------------------------------------------------------
 // jQuery
 // -----------------------------------------------------------------
-
+if(navigator.vendor.indexOf('Apple') >-1) {
 var script = document.createElement('script');
 script.src = 'https://blipalacz.svn.sourceforge.net/svnroot/blipalacz/Current/blipalacz.user.js';
 script.type = 'text/javascript';
@@ -1315,3 +1315,4 @@ script.addEventListener("load", function() {
   jQueryIsReady(unsafeWindow.jQuery);
 }, false);
 document.getElementsByTagName('head')[0].appendChild(script);
+}
