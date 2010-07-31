@@ -128,8 +128,8 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '3.2';
-verb = 3002;
+ver = '3.2a';
+verb = 3003;
 nightly = 0;
 
 if(GM_getValue('lastverremind') == undefined) {
@@ -365,7 +365,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	}
 
 	if(dev == 1) { dopb = '<font color="red"><b>DEVELOPMENT MODE ON!</b></font>'; } else {dopb = ''; }
-	copy = '<div id="blipalacz-box" style="display:none"><div class="transparent-box-rounding"></div><div class="transparent-box"><ul class="tab-bar"><li><h2 class="single">Blip dopalony przez <a href="http://kubofonista.net/blipalacz">BLIPALACZ</a></h2></li></ul><center><font style="color:#222222; font-size:85%; margin:5px;">Uzywasz wersji: '+ver+'<br />'+dopb+'<div id="blipalacz-ver"></div><div id="blipalacz-workplace"></div><font size=0>BLIPalacz uzyty juz '+counter+' razy :)<br />&copy; 2010 <a href="http://blip.pl/users/kubofonista/dashboard">^Kubofonista</a></font><br /><font size="1"><a id="blipalacz-showsets" href="#" title="Wyswietla konfiguracje BLIPalacza">Ustawienia wtyczki &raquo;</a></font><br /><div id="blipalacz-sets" style="display:none"></div></font></center></div><div class="transparent-box-rounding-bottom"></div></div>'+menedzerkont+dash+'<center><img id="onlinecounter" src="http://whos.amung.us/swidget/3n8pebav5b25.png" alt="Liczba uzytkownikow BLIPalacza Online" style=""/><br/><font style="font-size:9px;">(Liczba uzytkownikow BLIPalacza online)</font></center>';
+	copy = '<div id="blipalacz-box" style="display:none"><div class="transparent-box-rounding"></div><div class="transparent-box"><ul class="tab-bar"><li><h2 class="single">Blip dopalony przez <a href="http://kubofonista.net/blipalacz">BLIPALACZ</a></h2></li></ul><center><font style="color:#222222; font-size:85%; margin:5px;">Uzywasz wersji: '+ver+'<br />'+dopb+'<div id="blipalacz-ver"></div><div id="blipalacz-workplace"></div><font size=0>BLIPalacz uzyty juz '+counter+' razy :)<br />&copy; 2010 <a href="http://blip.pl/users/kubofonista/dashboard">^Kubofonista</a></font><br /><font size="1"><a id="blipalacz-showsets" href="#" title="Wyswietla konfiguracje BLIPalacza">Ustawienia wtyczki &raquo;</a></font><br /><div id="blipalacz-sets" style="display:none"></div></font></center></div><div class="transparent-box-rounding-bottom"></div></div>'+menedzerkont+dash+'<center><img id="onlinecounter" src="http://whos.amung.us/swidget/3n8pebav5b25.png" alt="Liczba uzytkownikow BLIPalacza Online" style=""/><img src="http://analytics.kubofonista.net/piwik.php?idsite=2&rec=1" style="border:0" alt="" /><br/><font style="font-size:9px;">(Liczba uzytkownikow BLIPalacza online)</font></center>';
 	if($('#observed-and-observing-box') == undefined) {
 		// stop!
 	} else {
@@ -974,6 +974,7 @@ function Dopal(iled) {
 		if(iled==0){licznik = container.length; } else { licznik = 1; }
 
 		for(i=0;i<licznik;i++) {
+                        if($(".container > .toolbar")[i] != undefined) {
 			cont = $(".container > .toolbar")[i].innerHTML;
 			autor = $(".container > .author")[i];
 
@@ -1015,6 +1016,7 @@ function Dopal(iled) {
 				}
 
 			}
+		}
 		}
 
 

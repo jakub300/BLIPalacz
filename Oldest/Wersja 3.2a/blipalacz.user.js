@@ -130,7 +130,7 @@ if(typeof GM_log === "undefined") {
 
 ver = '3.2a';
 verb = 3003;
-nightly = 5;
+nightly = 0;
 
 if(GM_getValue('lastverremind') == undefined) {
 	GM_setValue('lastverremind',verb);
