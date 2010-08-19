@@ -128,9 +128,9 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '3.2a';
-verb = 3003;
-nightly = 5;
+ver = '3.2b';
+verb = 3004;
+nightly = 6;
 
 if(GM_getValue('lastverremind') == undefined) {
 	GM_setValue('lastverremind',verb);
@@ -606,6 +606,33 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 
 	if(adres.match('http:\/\/blip.pl\/dashboard') || adres.match('http:\/\/blip.pl\/users')) {
 
+        rowerstats = '';
+
+	GM_xmlhttpRequest({
+	    method: 'GET',
+	    url: 'http://rowerstats.kubofonista.net/api/blipalacz/total/'+nick,
+	    headers: {
+	        'User-agent': 'BLIPalacz',
+	    },
+	    onload: function(responseDetails) {
+	    	json = JSON.parse(responseDetails.responseText, function (key, value) {
+	    	    var type;
+	    	    if (value && typeof value === 'object') {
+	    	        type = value.type;
+	    	        if (typeof type === 'string' && typeof window[type] === 'function') {
+	    	            return new (window[type])(value);
+	    	        }
+	    	    }
+	    	    return value;
+	    	});
+                        total = json['total'];
+                        if(json['error'] == undefined) {
+	    		rowerstats = ' | <a style="color:black !important" target="_blank" href="http://rowerstats.kubofonista.net/osoba,'+nick+'">Rower: '+total+' km</a>';
+                        }
+
+
+	    }
+	});
 
 	GM_xmlhttpRequest({
 	    method: 'GET',
@@ -665,7 +692,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 			if(zwrot == 0 || zwrot == undefined) {
 	    		$("#profile-info > h1").html(nick+' <span style="font-size:11px; text-align:right; position: relative; top: -2px;">(top n/a)</span>');
 			} else {
-	    		$("#profile-info > h1").html(nick+' <span style="font-size:11px; text-align:right; position: relative; top: -2px;">(top '+zwrot+zmiana+')</span><br /><font style="font-size: 8.5px;">Cytowan: '+cytowan+' | Wzmianek: '+wzmianek+'</font>');
+	    		$("#profile-info > h1").html(nick+' <span style="font-size:11px; text-align:right; position: relative; top: -2px;">(top '+zwrot+zmiana+')</span><br /><font style="font-size: 8.5px;">Cytowan: '+cytowan+' | Wzmianek: '+wzmianek+rowerstats+'</font>');
 			}
 
 
