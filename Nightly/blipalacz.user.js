@@ -128,9 +128,9 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '3.2c';
-verb = 3005;
-nightly = 7;
+ver = '3.2d';
+verb = 3006;
+nightly = 8;
 
 if(GM_getValue('lastverremind') == undefined) {
 	GM_setValue('lastverremind',verb);
@@ -954,12 +954,14 @@ function Dopal(iled) {
 		} else {
 
                         // niebezpieczne linki
-                        if (title.match(/(<([^>]+)>)/ig)) {
+                        if(title == undefined) {} else {
+                        if (title.match(/(<([^>]+))/ig)) {
                           //  $(".content > a")[i].setAttribute("title",'LINK ZAWIERAJACY XSS!!');
-                            $(".content > a")[i].innerHTML = title.replace(/(<([^>]+)>)/ig,"")+' <font color="red"><b>UWAGA!! LINK ZAWIERA ATAK XSS!!</b></font>';
+                            $(".content > a")[i].innerHTML = title.replace(/(<([^>]+))/ig,"")+' <font color="red"><b>UWAGA!! LINK ZAWIERA ATAK XSS!!</b></font>';
                         } else { // normalne linki
-                            $(".content > a")[i].innerHTML = title.replace(/(<([^>]+)>)/ig,"");
-		}
+                            $(".content > a")[i].innerHTML = title.replace(/(<([^>]+))/ig,"");
+                        }
+                        }
 	}
 	}
 
