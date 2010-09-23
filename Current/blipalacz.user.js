@@ -453,6 +453,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	BindujZmiane('blipir');
 	BindujZmiane('linkikokpit');
 	BindujZmiane('usunpolecamy');
+        BindujZmiane('usunreklame');
 	BindujZmiane('komunikatory');
 	BindujZmiane('menedzer');
 	BindujZmiane('trzyszesc');
