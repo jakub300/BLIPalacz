@@ -128,7 +128,7 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '3.23';
+ver = '3.2e';
 verb = 3007;
 nightly = 9;
 

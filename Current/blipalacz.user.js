@@ -128,8 +128,8 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '3.2d';
-verb = 3006;
+ver = '3.2e';
+verb = 3007;
 nightly = 0;
 
 if(GM_getValue('lastverremind') == undefined) {
@@ -279,6 +279,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	blipir = GM_getValue('blipir'); if(blipir == undefined) { blipir = 1; GM_setValue('blipir',1); }
 	linkikokpit = GM_getValue('linkikokpit'); if(linkikokpit == undefined) { linkikokpit = 1; GM_setValue('linkikokpit',1); }
 	usunpolecamy = GM_getValue('usunpolecamy'); if(usunpolecamy == undefined) { usunpolecamy = 0; GM_setValue('usunpolecamy',0); }
+        usunreklame = GM_getValue('usunreklame'); if(usunreklame == undefined) { usunreklame = 0; GM_setValue('usunreklame',0); }
 	komunikatory = GM_getValue('komunikatory'); if(komunikatory == undefined) { komunikatory = 1; GM_setValue('komunikatory',1); }
 	menedzer = GM_getValue('menedzer'); if(menedzer == undefined) { menedzer = 1; GM_setValue('menedzer',1); }
 	wylwaz = GM_getValue('wylwaz'); if(wylwaz == undefined) { wylwaz = 0; GM_setValue('wylwaz',0); }
@@ -377,7 +378,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	$('#quick-jump-box').append(darowizna);
 	}
 	$('#blipalacz-box').fadeIn();
-	setting = '<b>Aktywnosc dodatkow:</b> <br /> Kolorowanie tagow '+kts+'<br />Czytelniejsza bliposfera '+bs+'<br /> Cytaty w bliposferze '+bsc+'<br/> Cytaty na kokpicie '+ctk+'<br />Przybornik w powiadomieniach '+lnc+'<br />Przybornik w cytatach '+cc+'<br />Integracja z blipi.pl '+bpi+'<br />Ranking na kokpicie (obok nicka) '+bpir+'<br />Kokpit: Zamiana [link] na adres '+lkp+'<br />Linkowanie komunikatorow '+ko+'<br />Usuniecie boxa Polecamy '+upl+'<br />Powrot na kokpit z oponki '+bc+'<br />Menedzer kont blipowych '+me+'<br />Usuwanie tag clouda z kokpitow '+hcc+'<br /> Integracja z 3600.pl '+trzyszescc+'<br /> Ignor (plonk) pod blipnieciem '+plonkk+'<br /> Licznik obserwowanych online '+counteroo+' <br /> Magia REBLIPI w stats '+reblipii+'<br />Kontynuuj przy wlasnych dm/pm '+kontynuujj+'<br /> <p style="font-size:5px;">Ukryj boks wazne od BLIPalacza '+wylwazz+'</p><a href="#" id="blipalacz-polecamy">Wyswietl raz Polecamy &raquo;</a>';
+	setting = '<b>Aktywnosc dodatkow:</b> <br /> Kolorowanie tagow '+kts+'<br />Czytelniejsza bliposfera '+bs+'<br /> Cytaty w bliposferze '+bsc+'<br/> Cytaty na kokpicie '+ctk+'<br />Przybornik w powiadomieniach '+lnc+'<br />Przybornik w cytatach '+cc+'<br />Integracja z blipi.pl '+bpi+'<br />Ranking na kokpicie (obok nicka) '+bpir+'<br />Kokpit: Zamiana [link] na adres '+lkp+'<br />Linkowanie komunikatorow '+ko+'<br />Usuniecie boxa Polecamy '+upl+'<br />Usuniecie reklamy graf. '+urr+'<br />Powrot na kokpit z oponki '+bc+'<br />Menedzer kont blipowych '+me+'<br />Usuwanie tag clouda z kokpitow '+hcc+'<br /> Integracja z 3600.pl '+trzyszescc+'<br /> Ignor (plonk) pod blipnieciem '+plonkk+'<br /> Licznik obserwowanych online '+counteroo+' <br /> Magia REBLIPI w stats '+reblipii+'<br />Kontynuuj przy wlasnych dm/pm '+kontynuujj+'<br /> <p style="font-size:5px;">Ukryj boks wazne od BLIPalacza '+wylwazz+'</p><a href="#" id="blipalacz-polecamy">Wyswietl raz Polecamy &raquo;</a>';
 	if($("#blipalacz-sets") == undefined) {
 		// stop!
 	} else {
@@ -589,7 +590,10 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 
 	if(usunpolecamy == 1) {
 		GM_addStyle('#recommended-box {display:none; } #beginners-recommended-box {display:none; }');
+	}
 
+        if(usunreklame == 1) {
+            GM_addStyle('#sidebar a img[alt="Button"] {display: none; }');
 	}
 
 	if(hc == 1) {
