@@ -322,6 +322,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	bpir = AktywnoscDodatkow('blipir',blipir);
 	lkp = AktywnoscDodatkow('linkikokpit',linkikokpit);
 	upl = AktywnoscDodatkow('usunpolecamy',usunpolecamy);
+        urr = AktywnoscDodatkow('usunreklame',usunreklame);
 	ko = AktywnoscDodatkow('komunikatory',komunikatory);
 	me = AktywnoscDodatkow('menedzer',menedzer);
 	bc = AktywnoscDodatkow('back',back);
