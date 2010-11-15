@@ -130,7 +130,7 @@ if(typeof GM_log === "undefined") {
 
 ver = '3.2e';
 verb = 3007;
-nightly = 9;
+nightly = 10;
 
 if(GM_getValue('lastverremind') == undefined) {
 	GM_setValue('lastverremind',verb);
@@ -237,10 +237,14 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	adres = document.location.href;
 	nick = $("#profile-info > h1").html();
 	token = $('#authenticity_token').html().replace('"','').replace('"','').replace(/\n/,'').replace(/\n/,'').replace(/ /gi,'');
-	zalogowany = $('.login-data').html();
+        //token = $('input:hidden[name=authenticity_token]').val();
+
+        zalogowany = $('.login-data').html();
 
 	zalogowany = zalogowany.split(' ');
 	zalogowany = zalogowany[10].replace(/\n/,'');
+
+
 // EOF CORE //
 
 // ############## BLIPALACZ ENGINE CODE ############## //
@@ -596,7 +600,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 
         if(usunreklame == 1) {
             GM_addStyle('#sidebar a img[alt="Button"] {display: none; }');
-	}
+        }
 
 	if(hc == 1) {
 		if(!adres.match('http://blip.pl/tags/')) {
@@ -958,7 +962,7 @@ function Dopal(iled) {
 
 			//$(".content > a")[i].innerHTML = title;
 		} else {
-
+			//title = $(".content > a")[i].getAttribute("title");
                         // niebezpieczne linki
                         if(title == undefined) {} else {
                         if (title.match(/(<([^>]+))/ig)) {
@@ -968,7 +972,7 @@ function Dopal(iled) {
                             $(".content > a")[i].innerHTML = title.replace(/(<([^>]+))/ig,"");
                         }
                         }
-	}
+		}
 	}
 
 	if (href == '[blip]' && cytatykokpit == 1) {
@@ -1018,6 +1022,7 @@ function Dopal(iled) {
 		for(i=0;i<licznik;i++) {
                         if($(".container > .toolbar")[i] != undefined) {
 			cont = $(".container > .toolbar")[i].innerHTML;
+                        blipid = $(".container > .toolbar > .permalink")[i].getAttribute('href');
 			autor = $(".container > .author")[i];
 
 			if(autor == undefined) { } else {
@@ -1051,6 +1056,13 @@ function Dopal(iled) {
 				}
 				}
 
+                       	if(cont.indexOf('rozwin') == -1 && blipi == 1) {
+				if(autor == undefined) {} else {
+				$(".container > .toolbar")[i].innerHTML = $(".container > .toolbar")[i].innerHTML + '<span class="divider">&nbsp; | &nbsp;</span> <a class="respond rozwin" url="'+blipid+'" href="#">rozwin</a>';
+				//$(".container > .toolbar")[i].append('<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" href="http://stats.blipi.pl/'+autor+'" target="_blank">Stats</a>');
+				}
+				}
+
 			if(cont.indexOf('plonk') == -1 && plonk == 1) {
 				if(autor == undefined || autor == zalogowany) {} else {
 				$(".container > .toolbar")[i].innerHTML = $(".container > .toolbar")[i].innerHTML + '<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" onclick="var x = confirm(\'Czy napewno chcesz dodac '+autor+' do ignorowanych? \'); if(x == true) { var f = document.createElement(\'form\'); f.style.display = \'none\'; this.parentNode.appendChild(f); f.method = \'POST\'; f.action = this.href;var m = document.createElement(\'input\'); m.setAttribute(\'type\', \'hidden\'); m.setAttribute(\'name\', \'_method\'); m.setAttribute(\'value\', \'put\'); f.appendChild(m);var s = document.createElement(\'input\'); s.setAttribute(\'type\', \'hidden\'); s.setAttribute(\'name\', \'authenticity_token\'); s.setAttribute(\'value\', \''+token+'\'); f.appendChild(s);f.submit(); } return false;" id="ignore" href="/users/'+autor+'/ignore"><font style="font-size:7px;">plonk</font></a>';
@@ -1058,7 +1070,62 @@ function Dopal(iled) {
 				}
 
 			}
-		}
+                }
+
+$('.rozwin').each(function(e, v){
+$(v).click(function() {
+blipniecie_rozwinac = $(this).attr('url');
+blipi_url = blipniecie_rozwinac.replace('http://blip.pl/','').replace('/','%252F');
+blipid = blipniecie_rozwinac.replace('http://blip.pl/s/','');
+//alert(blipid);
+GM_xmlhttpRequest({
+		        		    method: 'GET',
+		        		    url: 'http://api.blipi.pl/blipalacz/szukaj/'+blipi_url,
+		        		    headers: {
+		        		        'User-agent': 'BLIPalacz',
+		        		        'Accept': 'application/atom+xml,application/xml,text/xml',
+		        		    },
+		        		    onload: function(responseDetails) {
+
+		        		    	blipijson = JSON.parse(responseDetails.responseText, function (key, value) {
+		        		    	    var type;
+		        		    	    if (value && typeof value === 'object') {
+		        		    	        type = value.type;
+		        		    	        if (typeof type === 'string' && typeof window[type] === 'function') {
+		        		    	            return new (window[type])(value);
+		        		    	        }
+		        		    	    }
+		        		    	    return value;
+		        		    	});
+
+		        		    	if(blipijson == '') {
+		        		    	blipizc = '';
+                                                return false;
+                                                } else {
+                                                    blipiz = '<ul>';
+                                                    //blipijson[0]['discussion'] = blipijson[0]['discussion'].sort();
+                                                    for (x in blipijson[0]['discussion']) {
+                                                        autor = blipijson[0]['discussion'][x]['user'].replace('/users/','');
+		        		    		czas = blipijson[0]['discussion'][x]['create_date'].replace('-','/');
+		        		    		czas = czas.replace('-','/');
+		        		    		body = blipijson[0]['discussion'][x]['content'];
+		        		    		body = body.replace(/http:\/\/([^\s]+)/g, '<a href="http://$1" title="http://$1" target="_blank">[$1]</a>');
+		        		    		body = body.replace(/#([^\s]+)/g, '<a title="tag..." href="http://blip.pl/tags/$1">#$1</a>');
+		        		    		body = body.replace(/\^([^\s]+)/g, '<a href="http://blip.pl/users/$1/dashboard">^$1</a>');
+                                                        blipiz = blipiz+'<li><a href="http://blip.pl/users/'+autor+'/dashboard"><img width="15" height="15" class="avatar size15" title="^hcsl" alt="" src="http://blip.pl/users/'+autor+'/avatar/femto.jpg"></a><a href="http://blip.pl/users/'+autor+'/dashboard">'+autor+'</a><span>: '+body+'</span><br></li>';
+                                                    }
+                                                    blipiz = blipiz+'</ul>';
+                                                    ba = $('#update-'+blipid+' > .container > .content').html();
+                                                    //alert(ba);
+                                                    $('#update-'+blipid+' > .container > .content').html(ba+blipiz);
+                                                    //Dopal(0);
+                                                }
+                                            }});
+
+return false;
+});
+});
+
 		}
 
 
@@ -1260,6 +1327,10 @@ $(document).ready(function() {
 		heads[0].appendChild(node);
 	}
 }
+
+
+
+
 
 	/* // PRIMA APRILLIS //
 	var data = new Date();
