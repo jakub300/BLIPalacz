@@ -128,9 +128,9 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '3.2e';
-verb = 3007;
-nightly = 10;
+ver = '3.3';
+verb = 3008;
+nightly = 11;
 
 if(GM_getValue('lastverremind') == undefined) {
 	GM_setValue('lastverremind',verb);
@@ -1080,45 +1080,20 @@ blipid = blipniecie_rozwinac.replace('http://blip.pl/s/','');
 //alert(blipid);
 GM_xmlhttpRequest({
 		        		    method: 'GET',
-		        		    url: 'http://api.blipi.pl/blipalacz/szukaj/'+blipi_url,
+		        		    url: 'http://blipalacz.kubofonista.net/api/blipi/rozwin.php?id='+blipi_url,
 		        		    headers: {
 		        		        'User-agent': 'BLIPalacz',
 		        		        'Accept': 'application/atom+xml,application/xml,text/xml',
 		        		    },
 		        		    onload: function(responseDetails) {
 
-		        		    	blipijson = JSON.parse(responseDetails.responseText, function (key, value) {
-		        		    	    var type;
-		        		    	    if (value && typeof value === 'object') {
-		        		    	        type = value.type;
-		        		    	        if (typeof type === 'string' && typeof window[type] === 'function') {
-		        		    	            return new (window[type])(value);
-		        		    	        }
-		        		    	    }
-		        		    	    return value;
-		        		    	});
-
-		        		    	if(blipijson == '') {
+		        		    	if(responseDetails.responseText == '') {
 		        		    	blipizc = '';
                                                 return false;
                                                 } else {
-                                                    blipiz = '<ul>';
-                                                    //blipijson[0]['discussion'] = blipijson[0]['discussion'].sort();
-                                                    for (x in blipijson[0]['discussion']) {
-                                                        autor = blipijson[0]['discussion'][x]['user'].replace('/users/','');
-		        		    		czas = blipijson[0]['discussion'][x]['create_date'].replace('-','/');
-		        		    		czas = czas.replace('-','/');
-		        		    		body = blipijson[0]['discussion'][x]['content'];
-		        		    		body = body.replace(/http:\/\/([^\s]+)/g, '<a href="http://$1" title="http://$1" target="_blank">[$1]</a>');
-		        		    		body = body.replace(/#([^\s]+)/g, '<a title="tag..." href="http://blip.pl/tags/$1">#$1</a>');
-		        		    		body = body.replace(/\^([^\s]+)/g, '<a href="http://blip.pl/users/$1/dashboard">^$1</a>');
-                                                        blipiz = blipiz+'<li><a href="http://blip.pl/users/'+autor+'/dashboard"><img width="15" height="15" class="avatar size15" title="^hcsl" alt="" src="http://blip.pl/users/'+autor+'/avatar/femto.jpg"></a><a href="http://blip.pl/users/'+autor+'/dashboard">'+autor+'</a><span>: '+body+'</span><br></li>';
-                                                    }
-                                                    blipiz = blipiz+'</ul>';
+                                                    blipiz = responseDetails.responseText;
                                                     ba = $('#update-'+blipid+' > .container > .content').html();
-                                                    //alert(ba);
                                                     $('#update-'+blipid+' > .container > .content').html(ba+blipiz);
-                                                    //Dopal(0);
                                                 }
                                             }});
 

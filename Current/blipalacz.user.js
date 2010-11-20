@@ -128,8 +128,8 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '3.2e';
-verb = 3007;
+ver = '3.3';
+verb = 3008;
 nightly = 0;
 
 if(GM_getValue('lastverremind') == undefined) {
@@ -237,10 +237,14 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	adres = document.location.href;
 	nick = $("#profile-info > h1").html();
 	token = $('#authenticity_token').html().replace('"','').replace('"','').replace(/\n/,'').replace(/\n/,'').replace(/ /gi,'');
+        //token = $('input:hidden[name=authenticity_token]').val();
+
 	zalogowany = $('.login-data').html();
 
 	zalogowany = zalogowany.split(' ');
 	zalogowany = zalogowany[10].replace(/\n/,'');
+
+
 // EOF CORE //
 
 // ############## BLIPALACZ ENGINE CODE ############## //
@@ -1018,6 +1022,7 @@ function Dopal(iled) {
 		for(i=0;i<licznik;i++) {
                         if($(".container > .toolbar")[i] != undefined) {
 			cont = $(".container > .toolbar")[i].innerHTML;
+                        blipid = $(".container > .toolbar > .permalink")[i].getAttribute('href');
 			autor = $(".container > .author")[i];
 
 			if(autor == undefined) { } else {
@@ -1051,6 +1056,13 @@ function Dopal(iled) {
 				}
 				}
 
+                       	if(cont.indexOf('rozwin') == -1 && blipi == 1) {
+				if(autor == undefined) {} else {
+				$(".container > .toolbar")[i].innerHTML = $(".container > .toolbar")[i].innerHTML + '<span class="divider">&nbsp; | &nbsp;</span> <a class="respond rozwin" url="'+blipid+'" href="#">rozwin</a>';
+				//$(".container > .toolbar")[i].append('<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" href="http://stats.blipi.pl/'+autor+'" target="_blank">Stats</a>');
+				}
+				}
+
 			if(cont.indexOf('plonk') == -1 && plonk == 1) {
 				if(autor == undefined || autor == zalogowany) {} else {
 				$(".container > .toolbar")[i].innerHTML = $(".container > .toolbar")[i].innerHTML + '<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" onclick="var x = confirm(\'Czy napewno chcesz dodac '+autor+' do ignorowanych? \'); if(x == true) { var f = document.createElement(\'form\'); f.style.display = \'none\'; this.parentNode.appendChild(f); f.method = \'POST\'; f.action = this.href;var m = document.createElement(\'input\'); m.setAttribute(\'type\', \'hidden\'); m.setAttribute(\'name\', \'_method\'); m.setAttribute(\'value\', \'put\'); f.appendChild(m);var s = document.createElement(\'input\'); s.setAttribute(\'type\', \'hidden\'); s.setAttribute(\'name\', \'authenticity_token\'); s.setAttribute(\'value\', \''+token+'\'); f.appendChild(s);f.submit(); } return false;" id="ignore" href="/users/'+autor+'/ignore"><font style="font-size:7px;">plonk</font></a>';
@@ -1059,6 +1071,36 @@ function Dopal(iled) {
 
 			}
 		}
+
+$('.rozwin').each(function(e, v){
+$(v).click(function() {
+blipniecie_rozwinac = $(this).attr('url');
+blipi_url = blipniecie_rozwinac.replace('http://blip.pl/','').replace('/','%252F');
+blipid = blipniecie_rozwinac.replace('http://blip.pl/s/','');
+//alert(blipid);
+GM_xmlhttpRequest({
+		        		    method: 'GET',
+		        		    url: 'http://blipalacz.kubofonista.net/api/blipi/rozwin.php?id='+blipi_url,
+		        		    headers: {
+		        		        'User-agent': 'BLIPalacz',
+		        		        'Accept': 'application/atom+xml,application/xml,text/xml',
+		        		    },
+		        		    onload: function(responseDetails) {
+
+		        		    	if(responseDetails.responseText == '') {
+		        		    	blipizc = '';
+                                                return false;
+                                                } else {
+                                                    blipiz = responseDetails.responseText;
+                                                    ba = $('#update-'+blipid+' > .container > .content').html();
+                                                    $('#update-'+blipid+' > .container > .content').html(ba+blipiz);
+		}
+                                            }});
+
+return false;
+});
+});
+
 		}
 
 
