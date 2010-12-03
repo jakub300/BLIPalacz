@@ -1020,10 +1020,12 @@ function Dopal(iled) {
 		if(iled==0){licznik = container.length; } else { licznik = 1; }
 
 		for(i=0;i<licznik;i++) {
-                        if($(".container > .toolbar")[i] != undefined) {
-			cont = $(".container > .toolbar")[i].innerHTML;
-                        blipid = $(".container > .toolbar > .permalink")[i].getAttribute('href');
-			autor = $(".container > .author")[i];
+                       if($(".container")[i].getElementsByClassName('toolbar')[0] != undefined) {
+			//cont = $(".container > .toolbar")[i].innerHTML;
+                        //blipid = $(".container > .toolbar > .permalink")[i].getAttribute('href');
+                        cont = $(".container")[i].getElementsByClassName('toolbar')[0].innerHTML;
+                        blipid = $(".container")[i].getElementsByClassName('toolbar')[0].getElementsByClassName('permalink')[0].getAttribute('href');
+			autor = $(".container")[i].getElementsByClassName('author')[0];
                         odbiorca = $(".container")[i].getElementsByClassName('recipient')[0];
 
                         dmpm = $(".container")[i].getElementsByClassName('recipient').length;
@@ -1064,21 +1066,21 @@ function Dopal(iled) {
                                 }
 
 				if(autor == undefined) {} else {
-				$(".container > .toolbar")[i].innerHTML = $(".container > .toolbar")[i].innerHTML + '<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" href="http://stats.blipi.pl/'+statlink+'" target="_blank">stats</a>';
+				$(".container")[i].getElementsByClassName('toolbar')[0].innerHTML = $(".container")[i].getElementsByClassName('toolbar')[0].innerHTML + '<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" href="http://stats.blipi.pl/'+statlink+'" target="_blank">stats</a>';
 				//$(".container > .toolbar")[i].append('<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" href="http://stats.blipi.pl/'+autor+'" target="_blank">Stats</a>');
 				}
 				}
 
-                       	if(cont.indexOf('rozwin') == -1 && blipi == 1 && odbiorca == undefined) {
+                       	if(cont.indexOf('rozwin') == -1 && blipi == 1 && dmpm == 0) {
 				if(autor == undefined) {} else {
-				$(".container > .toolbar")[i].innerHTML = $(".container > .toolbar")[i].innerHTML + '<span class="divider">&nbsp; | &nbsp;</span> <a class="respond rozwin" url="'+blipid+'" href="#">rozwin</a>';
+				$(".container")[i].getElementsByClassName('toolbar')[0].innerHTML = $(".container")[i].getElementsByClassName('toolbar')[0].innerHTML + '<span class="divider">&nbsp; | &nbsp;</span> <a class="respond rozwin" url="'+blipid+'" href="#">rozwin</a>';
 				//$(".container > .toolbar")[i].append('<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" href="http://stats.blipi.pl/'+autor+'" target="_blank">Stats</a>');
 				}
 				}
 
 			if(cont.indexOf('plonk') == -1 && plonk == 1) {
-				if(autor == undefined || autor == zalogowany) {} else {
-				$(".container > .toolbar")[i].innerHTML = $(".container > .toolbar")[i].innerHTML + '<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" onclick="var x = confirm(\'Czy napewno chcesz dodac '+autor+' do ignorowanych? \'); if(x == true) { var f = document.createElement(\'form\'); f.style.display = \'none\'; this.parentNode.appendChild(f); f.method = \'POST\'; f.action = this.href;var m = document.createElement(\'input\'); m.setAttribute(\'type\', \'hidden\'); m.setAttribute(\'name\', \'_method\'); m.setAttribute(\'value\', \'put\'); f.appendChild(m);var s = document.createElement(\'input\'); s.setAttribute(\'type\', \'hidden\'); s.setAttribute(\'name\', \'authenticity_token\'); s.setAttribute(\'value\', \''+token+'\'); f.appendChild(s);f.submit(); } return false;" id="ignore" href="/users/'+autor+'/ignore"><font style="font-size:7px;">plonk</font></a>';
+				if(autor == zalogowany || autor == undefined) {} else {
+				$(".container")[i].getElementsByClassName('toolbar')[0].innerHTML = $(".container")[i].getElementsByClassName('toolbar')[0].innerHTML + '<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" onclick="var x = confirm(\'Czy napewno chcesz dodac '+autor+' do ignorowanych? \'); if(x == true) { var f = document.createElement(\'form\'); f.style.display = \'none\'; this.parentNode.appendChild(f); f.method = \'POST\'; f.action = this.href;var m = document.createElement(\'input\'); m.setAttribute(\'type\', \'hidden\'); m.setAttribute(\'name\', \'_method\'); m.setAttribute(\'value\', \'put\'); f.appendChild(m);var s = document.createElement(\'input\'); s.setAttribute(\'type\', \'hidden\'); s.setAttribute(\'name\', \'authenticity_token\'); s.setAttribute(\'value\', \''+token+'\'); f.appendChild(s);f.submit(); } return false;" id="ignore" href="/users/'+autor+'/ignore"><font style="font-size:7px;">plonk</font></a>';
 				}
 				}
 
