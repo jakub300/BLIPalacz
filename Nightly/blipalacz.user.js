@@ -128,9 +128,9 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '3.3';
-verb = 3008;
-nightly = 11;
+ver = '3.3a';
+verb = 3009;
+nightly = 12;
 
 if(GM_getValue('lastverremind') == undefined) {
 	GM_setValue('lastverremind',verb);
@@ -1024,9 +1024,16 @@ function Dopal(iled) {
 			cont = $(".container > .toolbar")[i].innerHTML;
                         blipid = $(".container > .toolbar > .permalink")[i].getAttribute('href');
 			autor = $(".container > .author")[i];
+                        odbiorca = $(".container")[i].getElementsByClassName('recipient')[0];
+
+                        dmpm = $(".container")[i].getElementsByClassName('recipient').length;
 
 			if(autor == undefined) { } else {
 				autor = autor.getAttribute("href").replace('http://blip.pl/users/','').replace('/dashboard','');
+			}
+
+                        if(odbiorca == undefined) { } else {
+				odbiorca = odbiorca.getAttribute("href").replace('http://blip.pl/users/','').replace('/dashboard','');
 			}
 
 			/*if (dev == 1) {
@@ -1050,13 +1057,19 @@ function Dopal(iled) {
 			quote = $(".container > .toolbar > .quote")[i].innerHTML = '</span> <a class="quote" href="'+permalink+'" title="">cytuj</a>';
 			}*/
 			if(cont.indexOf('stats') == -1 && blipi == 1) {
+                                if(odbiorca == undefined) {
+                                    statlink = autor;
+                                } else {
+                                    statlink = autor+'/'+odbiorca;
+                                }
+
 				if(autor == undefined) {} else {
-				$(".container > .toolbar")[i].innerHTML = $(".container > .toolbar")[i].innerHTML + '<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" href="http://stats.blipi.pl/'+autor+'" target="_blank">stats</a>';
+				$(".container > .toolbar")[i].innerHTML = $(".container > .toolbar")[i].innerHTML + '<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" href="http://stats.blipi.pl/'+statlink+'" target="_blank">stats</a>';
 				//$(".container > .toolbar")[i].append('<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" href="http://stats.blipi.pl/'+autor+'" target="_blank">Stats</a>');
 				}
 				}
 
-                       	if(cont.indexOf('rozwin') == -1 && blipi == 1) {
+                       	if(cont.indexOf('rozwin') == -1 && blipi == 1 && odbiorca == undefined) {
 				if(autor == undefined) {} else {
 				$(".container > .toolbar")[i].innerHTML = $(".container > .toolbar")[i].innerHTML + '<span class="divider">&nbsp; | &nbsp;</span> <a class="respond rozwin" url="'+blipid+'" href="#">rozwin</a>';
 				//$(".container > .toolbar")[i].append('<span class="divider">&nbsp; | &nbsp;</span> <a class="respond" href="http://stats.blipi.pl/'+autor+'" target="_blank">Stats</a>');
@@ -1071,9 +1084,11 @@ function Dopal(iled) {
 
 			}
                 }
-
+bb = [];
 $('.rozwin').each(function(e, v){
 $(v).click(function() {
+if(bb[v] == 1) { return false; }
+bb[v] = 1;
 blipniecie_rozwinac = $(this).attr('url');
 blipi_url = blipniecie_rozwinac.replace('http://blip.pl/','').replace('/','%252F');
 blipid = blipniecie_rozwinac.replace('http://blip.pl/s/','');
@@ -1082,7 +1097,7 @@ GM_xmlhttpRequest({
 		        		    method: 'GET',
 		        		    url: 'http://blipalacz.kubofonista.net/api/blipi/rozwin.php?id='+blipi_url,
 		        		    headers: {
-		        		        'User-agent': 'BLIPalacz',
+		        		        'User-Agent': 'BLIPalacz',
 		        		        'Accept': 'application/atom+xml,application/xml,text/xml',
 		        		    },
 		        		    onload: function(responseDetails) {
