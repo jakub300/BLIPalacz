@@ -128,8 +128,8 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '3.3a';
-verb = 3009;
+ver = '3.3b';
+verb = 3010;
 nightly = 0;
 
 if(GM_getValue('lastverremind') == undefined) {
@@ -968,7 +968,7 @@ function Dopal(iled) {
                         if (title.match(/(<([^>]+))/ig)) {
                           //  $(".content > a")[i].setAttribute("title",'LINK ZAWIERAJACY XSS!!');
                             $(".content > a")[i].innerHTML = title.replace(/(<([^>]+))/ig,"")+' <font color="red"><b>UWAGA!! LINK ZAWIERA ATAK XSS!!</b></font>';
-                        } else { // normalne linki
+                        } else if (title != '') { // normalne linki
                             $(".content > a")[i].innerHTML = title.replace(/(<([^>]+))/ig,"");
                         }
                         }
@@ -1099,7 +1099,7 @@ GM_xmlhttpRequest({
 		        		    method: 'GET',
 		        		    url: 'http://blipalacz.kubofonista.net/api/blipi/rozwin.php?id='+blipi_url,
 		        		    headers: {
-		        		        'User-agent': 'BLIPalacz',
+		        		        'User-Agent': 'BLIPalacz',
 		        		        'Accept': 'application/atom+xml,application/xml,text/xml',
 		        		    },
 		        		    onload: function(responseDetails) {

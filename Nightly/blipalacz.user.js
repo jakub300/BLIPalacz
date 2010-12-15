@@ -128,9 +128,9 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '3.3a';
-verb = 3009;
-nightly = 12;
+ver = '3.3b';
+verb = 3010;
+nightly = 13;
 
 if(GM_getValue('lastverremind') == undefined) {
 	GM_setValue('lastverremind',verb);
@@ -968,7 +968,7 @@ function Dopal(iled) {
                         if (title.match(/(<([^>]+))/ig)) {
                           //  $(".content > a")[i].setAttribute("title",'LINK ZAWIERAJACY XSS!!');
                             $(".content > a")[i].innerHTML = title.replace(/(<([^>]+))/ig,"")+' <font color="red"><b>UWAGA!! LINK ZAWIERA ATAK XSS!!</b></font>';
-                        } else { // normalne linki
+                        } else if (title != '') { // normalne linki
                             $(".content > a")[i].innerHTML = title.replace(/(<([^>]+))/ig,"");
                         }
                         }
