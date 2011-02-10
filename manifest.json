@@ -1,0 +1,14 @@
+{
+   "background_page": "background.html",
+   "content_scripts": [ {
+      "js": [ "jquery.js", "gm.js", "blipalacz.js" ],
+      "matches": [ "http://blip.pl/dashboard*", "http://blip.pl/users/*/dashboard*", "http://www.blip.pl/dashboard*", "http://www.blip.pl/users/*/dashboard*", "http://blip.pl/s/*", "http://blip.pl/dm/*", "http://blip.pl/tags/*", "http://www.blip.pl/s/*", "http://www.blip.pl/dm/*", "http://www.blip.pl/tags/*", "http://www.blip.pl/", "http://www.blip.pl/bliposphere", "http://blip.pl/", "http://blip.pl/bliposphere", "http://rdir.pl/*/stats", "http://help.gadu-gadu.pl/errors/blip/", "http://czydziala.gadu-gadu.pl/blip/" ]
+   } ],
+   "description": "Dopala blipa :)",
+   "icons": {
+      "128": "logo.jpg"
+   },
+   "name": "BLIPalacz",
+   "permissions": [ "tabs", "http://*.blip.pl/*", "http://api.blipi.pl/*", "http://czydziala.gadu-gadu.pl/*" ],
+   "version": "3.5.1"
+}

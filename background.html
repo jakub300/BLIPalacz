@@ -1,0 +1,65 @@
+<script>
+function GM_xmlhttpRequest(details, callback, id) {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        var responseState = {
+            responseXML:(xmlhttp.readyState==4 ? xmlhttp.responseXML : ''),
+            responseText:(xmlhttp.readyState==4 ? xmlhttp.responseText : ''),
+            readyState:xmlhttp.readyState,
+            responseHeaders:(xmlhttp.readyState==4 ? xmlhttp.getAllResponseHeaders() : ''),
+            status:(xmlhttp.readyState==4 ? xmlhttp.status : 0),
+            statusText:(xmlhttp.readyState==4 ? xmlhttp.statusText : '')
+        }
+        if (details["onreadystatechange"]) {
+            details["onreadystatechange"](responseState);
+        }
+        if (xmlhttp.readyState==4) {
+            if (details["onload"] && xmlhttp.status>=200 && xmlhttp.status<300) {
+                //details["onload"](responseState);
+				callback({'resp' : responseState, 'id' : id});
+				//return {'func' : details["onload"], 'data': responseState};
+				//console.log('sending')
+				/*chrome.tabs.getSelected(null, function(tab) {
+				  console.log(tab.id)
+				  chrome.tabs.sendRequest(tab.id, {'func' : details["onload"], 'data': responseState});
+				});*/
+            }
+            if (details["onerror"] && (xmlhttp.status<200 || xmlhttp.status>=300)) {
+                details["onerror"](responseState);
+            }
+        }
+    }
+    try {
+      //cannot do cross domain
+      xmlhttp.open(details.method, details.url);
+    } catch(e) {
+      if( details["onerror"] ) {
+        //simulate a real error
+        details["onerror"]({responseXML:'',responseText:'',readyState:4,responseHeaders:'',status:403,statusText:'Forbidden'});
+      }
+      return;
+    }
+    if (details.headers) {
+        for (var prop in details.headers) {
+            xmlhttp.setRequestHeader(prop, details.headers[prop]);
+        }
+    }
+    xmlhttp.send((typeof(details.data)!='undefined')?details.data:null);
+}
+function onRequest(request, sender, callback){
+	console.log('load1');
+	if(request.details) {
+		request.details['onload'] = true;
+		//console.log(request.details);
+		//console.log(request.id);
+		//console.log('load2');
+		GM_xmlhttpRequest(request.details, callback, request.id)
+		/*if(test.func) {
+			console.log('load3');
+		}*/
+	}
+	//callback({'action' : 'show'});
+	//chrome.extension.sendRequest({'action' : 'show'}, onText);
+}
+chrome.extension.onRequest.addListener(onRequest);
+</script>
