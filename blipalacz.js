@@ -125,8 +125,8 @@ if(typeof GM_log === "undefined") {
 }
 }
 
-ver = '3.5.1';
-verb = 3007;
+ver = '3.5.2';
+verb = 3008;
 
 if(GM_getValue('lastverremind') == undefined) {
 	GM_setValue('lastverremind',verb);
