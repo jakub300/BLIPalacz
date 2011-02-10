@@ -20,7 +20,7 @@
 // @include        http://help.gadu-gadu.pl/errors/blip/
 // @include        http://czydziala.gadu-gadu.pl/blip/
 // @include        http://blip.pl/updates/search?*
-// @require        https://blipalacz.svn.sourceforge.net/svnroot/blipalacz/Utils/jQuery.js
+// @require        https://github.com/kubofonista/BLIPalacz/raw/master/Utils/jQuery.js
 // ==/UserScript==
 
 // ZABRANIA SIE DOKONYWANIA JAKICHKOLWIEK MODYFIKACJI KODU BEZ ZGODY AUTORA //
@@ -130,7 +130,7 @@ if(typeof GM_log === "undefined") {
 
 ver = '3.3b';
 verb = 3011;
-nightly = 14;
+nightly = 0;
 
 if(GM_getValue('lastverremind') == undefined) {
 	GM_setValue('lastverremind',verb);
@@ -239,7 +239,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 	token = $('#authenticity_token').html().replace('"','').replace('"','').replace(/\n/,'').replace(/\n/,'').replace(/ /gi,'');
         //token = $('input:hidden[name=authenticity_token]').val();
 
-        zalogowany = $('.login-data').html();
+	zalogowany = $('.login-data').html();
 
 	zalogowany = zalogowany.split(' ');
 	zalogowany = zalogowany[10].replace(/\n/,'');
@@ -555,7 +555,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
         if(nightly != 0) {
             GM_xmlhttpRequest({
 	    method: 'GET',
-	    url: 'https://blipalacz.svn.sourceforge.net/svnroot/blipalacz/Nightly/ver.txt',
+	    url: 'https://github.com/kubofonista/BLIPalacz/raw/nightly/ver_nightly.txt',
 	    headers: {
 	        'User-agent': 'BLIPalacz CheckVer',
 	        'Accept': 'application/atom+xml,application/xml,text/xml',
@@ -565,10 +565,10 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
                     if(GM_getValue('lastnight') == undefined || GM_getValue('lastnight') < responseDetails.responseText || isNaN(GM_getValue('lastnight'))) {
                          alert("Strzalka! Uzywasz wersji NIGHTLY (nocnej) dodatku zatem informuje Cie: Dostepna jest nowsza wersja nocna. Po kliknieciu OK ujrzysz okienko instalacyjne :)");
                          GM_setValue('lastnight',responseDetails.responseText);
-                        window.location='https://blipalacz.svn.sourceforge.net/svnroot/blipalacz/Nightly/blipalacz.user.js';
+                        window.location='https://github.com/kubofonista/BLIPalacz/raw/nightly/blipalacz.user.js';
                     }
 
-                   Message('<font color="green"><b>Dostepna jest nowsza wersja nocna dodatku!</b></font><br /><a href="https://blipalacz.svn.sourceforge.net/svnroot/blipalacz/Nightly/blipalacz.user.js" title="Kliknij aby zaktualizowac &raquo;">Kliknij aby zaktualizowac &raquo;</a>  |   Nie chcesz otrzymywać aktualizacji nocnych? Zainstaluj wersję dzienną: <a href="http://kubofonista.net/download/BLIPalacz.user.js" title="Kliknij &raquo;">Kliknij &raquo;</a>');
+                   Message('<font color="green"><b>Dostepna jest nowsza wersja nocna dodatku!</b></font><br /><a href="https://github.com/kubofonista/BLIPalacz/raw/nightly/ver_nightly.txt" title="Kliknij aby zaktualizowac &raquo;">Kliknij aby zaktualizowac &raquo;</a>  |   Nie chcesz otrzymywać aktualizacji nocnych? Zainstaluj wersję dzienną: <a href="http://kubofonista.net/download/BLIPalacz.user.js" title="Kliknij &raquo;">Kliknij &raquo;</a>');
 
                 }
             }
@@ -600,7 +600,7 @@ if(back == 1 && (document.location.href == 'http://help.gadu-gadu.pl/errors/blip
 
         if(usunreklame == 1) {
             GM_addStyle('#sidebar a img[alt="Button"] {display: none; }');
-        }
+	}
 
 	if(hc == 1) {
 		if(!adres.match('http://blip.pl/tags/')) {
@@ -975,7 +975,7 @@ function Dopal(iled) {
                             $(".content > a")[i].innerHTML = title.replace(/(<([^>]+))/ig,"");
                         }
                         }
-		}
+	}
 	}
 
 	if (href == '[blip]' && cytatykokpit == 1) {
@@ -1088,7 +1088,7 @@ function Dopal(iled) {
 				}
 
 			}
-                }
+		}
 bb = [];
 $('.rozwin').each(function(e, v){
 $(v).click(function() {
@@ -1114,7 +1114,7 @@ GM_xmlhttpRequest({
                                                     blipiz = responseDetails.responseText;
                                                     ba = $('#update-'+blipid+' > .container > .content').html();
                                                     $('#update-'+blipid+' > .container > .content').html(ba+blipiz);
-                                                }
+		}
                                             }});
 
 return false;
@@ -1418,7 +1418,7 @@ if (typeof(unsafeWindow) === 'undefined') {
 // -----------------------------------------------------------------
 if(navigator.vendor.indexOf('Apple') >-1) {
 var script = document.createElement('script');
-script.src = 'https://blipalacz.svn.sourceforge.net/svnroot/blipalacz/Current/blipalacz.user.js';
+script.src = 'https://github.com/kubofonista/BLIPalacz/raw/master/Utils/jQuery.js';
 script.type = 'text/javascript';
 script.addEventListener("load", function() {
   unsafeWindow.jQuery.noConflict();
