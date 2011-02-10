@@ -818,6 +818,8 @@ iled = 0;
                         if (title.match(/(<([^>]+))/ig)) {
                           //  $(".content > a")[i].setAttribute("title",'LINK ZAWIERAJACY XSS!!');
                             jQuery(".content > a")[i].innerHTML = title.replace(/(<([^>]+))/ig,"")+' <font color="red"><b>UWAGA!! LINK ZAWIERA ATAK XSS!!</b></font>';
+                        } else if (title == '') {  // nie skrocone
+                            $(".content > a")[i].innerHTML = thref;
                         } else { // normalne linki
                             jQuery(".content > a")[i].innerHTML = title.replace(/(<([^>]+))/ig,"");
                         }
