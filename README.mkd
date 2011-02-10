@@ -1,13 +1,13 @@
-# BLIPalacz — Because it’s your BLIP!
+# BLIPalacz â€” Because itâ€™s your BLIP!
 
-## Czym jest BLIPalacz?
+### Czym jest BLIPalacz?
 
-Jest to rozszerzenie do GreaseMonkey'a w przegl¹darce Firefox oraz GreaseKit'a w przegl¹darce Safari rozszerzaj¹ce mo¿liwoœci BLIPa na jego stronie WWW.
+Jest to rozszerzenie do GreaseMonkey'a w przeglÄ…darce Firefox oraz GreaseKit'a w przeglÄ…darce Safari rozszerzajÄ…ce moÅ¼liwoÅ›ci BLIPa na jego stronie WWW.
 
-## Obecne funkcjonalnoœci
+### Obecne funkcjonalnoÅ›ci
 
-Funkcjonalnoœci zosta³y wypisane na stronie projektu: http://kubofonista.net/blipalacz
+FunkcjonalnoÅ›ci zostaÅ‚y wypisane na stronie projektu: http://kubofonista.net/blipalacz
 
-## Changelog
+### Changelog
 
-Opis zmian dostêpny jest w pliku [CHANGELOG.mkd][CHANGELOG]
+Opis zmian dostÄ™pny jest w pliku CHANGELOG.mkd

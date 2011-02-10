@@ -4,16 +4,16 @@ Opis zmian w projekcie wraz z kolejnymi wersjami:
 
 #### Wersja 3.0:
 
-   * Od strony u¿ytkownika nie zmieni³o siê zupe³nie nic – jednak najwa¿niejsze jest to, co w œrodku. W tej wersji postanowi³em zmieniæ sposób ³apania blipniêæ. Dawniej skrypt wykonywa³ sprawdzenie co kilka sekund i dopala³ blipniêcia. W obecnej wersji dopalanie odbywa siê od razu przy otrzymaniu nowej wiadomoœci na kokpit. Zmiana ta spowodowa³a tak¿e fajny skutek uboczny – blipniêcia nie dopalaj¹ siê na Waszych oczach lecz dostajecie je od razu dopalone. Zmiana ta wp³ynê³a bardzo pozytywnie na obci¹¿enie procesora przez przegl¹darkê.
-    Wiêcej: http://kubofonista.net/blipalacz-3-0-jakie-powazne-zmiany-niesie
+   * Od strony uÅ¼ytkownika nie zmieniÅ‚o siÄ™ zupeÅ‚nie nic â€“ jednak najwaÅ¼niejsze jest to, co w Å›rodku. W tej wersji postanowiÅ‚em zmieniÄ‡ sposÃ³b Å‚apania blipniÄ™Ä‡. Dawniej skrypt wykonywaÅ‚ sprawdzenie co kilka sekund i dopalaÅ‚ blipniÄ™cia. W obecnej wersji dopalanie odbywa siÄ™ od razu przy otrzymaniu nowej wiadomoÅ›ci na kokpit. Zmiana ta spowodowaÅ‚a takÅ¼e fajny skutek uboczny â€“ blipniÄ™cia nie dopalajÄ… siÄ™ na Waszych oczach lecz dostajecie je od razu dopalone. Zmiana ta wpÅ‚ynÄ™Å‚a bardzo pozytywnie na obciÄ…Å¼enie procesora przez przeglÄ…darkÄ™.
+    WiÄ™cej: http://kubofonista.net/blipalacz-3-0-jakie-powazne-zmiany-niesie
 
 #### Wersja 2.12:
 
-   * Przycisk kontynuuj zamiast skreœlonego odpowiedz przy w³asnych dm/pm. Przydatny do prowadzenia d³ugiej korespondencji w kilku wiadomoœciach tak aby nie szukaæ nicku rozmówcy. Dodatek wykona³ ^leafnode
+   * Przycisk kontynuuj zamiast skreÅ›lonego odpowiedz przy wÅ‚asnych dm/pm. Przydatny do prowadzenia dÅ‚ugiej korespondencji w kilku wiadomoÅ›ciach tak aby nie szukaÄ‡ nicku rozmÃ³wcy. Dodatek wykonaÅ‚ ^leafnode
 
 #### Wersja 2.11:
 
-   * Integracja z Licznikiem osób online oraz Magi¹ Reblipi wykonan¹ przez ^kosciak'a
+   * Integracja z Licznikiem osÃ³b online oraz MagiÄ… Reblipi wykonanÄ… przez ^kosciak'a
 
 #### Wersja 2.10:
 
@@ -21,106 +21,106 @@ Opis zmian w projekcie wraz z kolejnymi wersjami:
 
 #### Wersja 2.9:
 
-   * Zmiany integracji z BLIPI.pl - strza³ki spadku / awansu s¹ na sta³e
-   * Dodanie liczby wzmianek / cytowañ
-   * Wyœwietlanie TOP100 wprost na BLIPie
+   * Zmiany integracji z BLIPI.pl - strzaÅ‚ki spadku / awansu sÄ… na staÅ‚e
+   * Dodanie liczby wzmianek / cytowaÅ„
+   * WyÅ›wietlanie TOP100 wprost na BLIPie
 
 #### Wersja 2.8:
 
-   * Bugfix rozwijania linków - zawieszenie integracji z bit.ly
-   * Poprawka usuwania polecamy - usuwa tak¿e "Polecamy na pocz¹tek"
-   * Poprawka nowego wygl¹du, nie psuje siê w pewnych okolicznoœciach
-   * Zmiana systemu sprawdzania wersji, jeœli ktoœ posiada nowsz¹ od publicznej to nie pluje, ¿e dostêpna jest nowsza, tylko informuje o korzystaniu z przedpremierowej
-   * Szybkie ignorowanie spod blipniêcia - opcja plonk
+   * Bugfix rozwijania linkÃ³w - zawieszenie integracji z bit.ly
+   * Poprawka usuwania polecamy - usuwa takÅ¼e "Polecamy na poczÄ…tek"
+   * Poprawka nowego wyglÄ…du, nie psuje siÄ™ w pewnych okolicznoÅ›ciach
+   * Zmiana systemu sprawdzania wersji, jeÅ›li ktoÅ› posiada nowszÄ… od publicznej to nie pluje, Å¼e dostÄ™pna jest nowsza, tylko informuje o korzystaniu z przedpremierowej
+   * Szybkie ignorowanie spod blipniÄ™cia - opcja plonk
 
 #### Wersja 2.7:
 
-   * Minirank oraz liczba obserwuj¹cych wyœwietlaj¹ strza³ki awansu lub spadku w stosunku do ostatniego sprawdzenia
+   * Minirank oraz liczba obserwujÄ…cych wyÅ›wietlajÄ… strzaÅ‚ki awansu lub spadku w stosunku do ostatniego sprawdzenia
 
 #### Wersja 2.6:
 
-   * Integracja z minirankiem oraz licznikiem BLIPI (screen nieco wy¿ej)
-   * Integracja z bit.ly - zwalczam to, linki s¹ rozwijane normalnie :)
-   * Wycofanie siê z integracji z ^t
+   * Integracja z minirankiem oraz licznikiem BLIPI (screen nieco wyÅ¼ej)
+   * Integracja z bit.ly - zwalczam to, linki sÄ… rozwijane normalnie :)
+   * Wycofanie siÄ™ z integracji z ^t
 
 #### Wersja 2.5a:
 
-   * Wyrzucenie proœby o obserwacje BLIPalacza na rzecz jednorazowej przy instalacji dodatku
-   * Dodanie boksa wa¿ne informacje od BLIPalacza (mo¿na wy³¹czyæ, ale bardzo proszê tego nie robiæ, boks ten jest jako ostatni, tylko na Waszym kokpicie i w niczym nie przeszkadza, a pozwala mi mieæ kontakt z u¿ytkownikiem)
-   * Drobne porz¹dki w kodzie
+   * Wyrzucenie proÅ›by o obserwacje BLIPalacza na rzecz jednorazowej przy instalacji dodatku
+   * Dodanie boksa waÅ¼ne informacje od BLIPalacza (moÅ¼na wyÅ‚Ä…czyÄ‡, ale bardzo proszÄ™ tego nie robiÄ‡, boks ten jest jako ostatni, tylko na Waszym kokpicie i w niczym nie przeszkadza, a pozwala mi mieÄ‡ kontakt z uÅ¼ytkownikiem)
+   * Drobne porzÄ…dki w kodzie
 
 #### Wersja 2.5:
 
-   * Poprawka kolorowania tagów. Tag Cloud nie jest kolorowany
-   * Mo¿liwoœæ wy³¹czenia Tag Clouda z kokpitów, jest w niestosownym miejscu i myœlê, ¿e przydatny tylko na stronach tagów
-   * Lepsze przypomnienie o dostêpnoœci wersji (czêste ale wcale nie upierdliwe)
-   * Beta integracji z ^t. Statusy z Twittera s¹ czytelniejsze i przypominaj¹ bardziej statusy ni¿ pmy, a w ka¿dym razie nie stanowi¹ zwyk³ego pma. Opcja jest dostêpna po uruchomieniu skryptu w trybie DEV ze wzglêdu na jej status beta i czasami destrukcyjne dzia³anie.
-   * Poprawka powiadomieñ po pierwszej instalacji. Nie wyrzuca info o nowej wersji i nie przekierowuje na kokpit blipalacza
+   * Poprawka kolorowania tagÃ³w. Tag Cloud nie jest kolorowany
+   * MoÅ¼liwoÅ›Ä‡ wyÅ‚Ä…czenia Tag Clouda z kokpitÃ³w, jest w niestosownym miejscu i myÅ›lÄ™, Å¼e przydatny tylko na stronach tagÃ³w
+   * Lepsze przypomnienie o dostÄ™pnoÅ›ci wersji (czÄ™ste ale wcale nie upierdliwe)
+   * Beta integracji z ^t. Statusy z Twittera sÄ… czytelniejsze i przypominajÄ… bardziej statusy niÅ¼ pmy, a w kaÅ¼dym razie nie stanowiÄ… zwykÅ‚ego pma. Opcja jest dostÄ™pna po uruchomieniu skryptu w trybie DEV ze wzglÄ™du na jej status beta i czasami destrukcyjne dziaÅ‚anie.
+   * Poprawka powiadomieÅ„ po pierwszej instalacji. Nie wyrzuca info o nowej wersji i nie przekierowuje na kokpit blipalacza
 
 #### Wersja 2.4:
 
-   * Automatyczne przekierowanie zwrotne z denerwuj¹cego pana oponki. Nie wiem jak siê ma to do zapêtlenia wiêc uwa¿ajcie!
-   * Nowy wygl¹d cytatów i innych BLIPalacza od ^piotros (mo¿na wy³¹czyæ jakby siê nie spodoba³)
+   * Automatyczne przekierowanie zwrotne z denerwujÄ…cego pana oponki. Nie wiem jak siÄ™ ma to do zapÄ™tlenia wiÄ™c uwaÅ¼ajcie!
+   * Nowy wyglÄ…d cytatÃ³w i innych BLIPalacza od ^piotros (moÅ¼na wyÅ‚Ä…czyÄ‡ jakby siÄ™ nie spodobaÅ‚)
 
 #### Wersja 2.3a:
 
-   * Bugfix zepsutej zamiany linków przy wy³¹czonym kolorowaniu tagów
-   * Bugfix z³ego linkowania noticów
+   * Bugfix zepsutej zamiany linkÃ³w przy wyÅ‚Ä…czonym kolorowaniu tagÃ³w
+   * Bugfix zÅ‚ego linkowania noticÃ³w
    * Poprawka integracji z BLIPI
 
 #### Wersja 2.3:
 
-   * Bugfix b³êdnego linkowania w noticach.
-   * Naprawa rozszerzania linków - zepsu³ siê po zmianie tego przez BLIPa
-   * Usuniêcie linkowania do statystyk linków - BLIP sam linkuje
-   * Integracja z BLIPi pe³n¹ par¹ - wyszukiwanie odbywa siê bez opuszczania BLIPa :)
+   * Bugfix bÅ‚Ä™dnego linkowania w noticach.
+   * Naprawa rozszerzania linkÃ³w - zepsuÅ‚ siÄ™ po zmianie tego przez BLIPa
+   * UsuniÄ™cie linkowania do statystyk linkÃ³w - BLIP sam linkuje
+   * Integracja z BLIPi peÅ‚nÄ… parÄ… - wyszukiwanie odbywa siÄ™ bez opuszczania BLIPa :)
 
 #### Wersja 2.2:
 
-   * Dodanie linkowania do statystyk klikniêæ odsy³aczy
-   * Bugfix b³êdu kasuj¹cego linkowanie cytatów w powiadomieniach
+   * Dodanie linkowania do statystyk klikniÄ™Ä‡ odsyÅ‚aczy
+   * Bugfix bÅ‚Ä™du kasujÄ…cego linkowanie cytatÃ³w w powiadomieniach
 
 #### Wersja 2.1:
 
-   * Dodanie mened¿era kont blipowych - koniec z zapamiêtywaniem swoich botów oraz ich hase³, jedno klikniêcie przenosi ciê na dane konto - coœ co BLIP powinien mieæ od dawna - konto g³ówne i poboczne.
-   * Bugfix b³êdu kasuj¹cego linkowanie cytatów
-   * Lekka poprawka boxa blipalacza - ma w³asne ID
-   * Usuniêcie obserwowania samego siebie - to ju¿ nie dzia³a, narazie usuniêty sam link
+   * Dodanie menedÅ¼era kont blipowych - koniec z zapamiÄ™tywaniem swoich botÃ³w oraz ich haseÅ‚, jedno klikniÄ™cie przenosi ciÄ™ na dane konto - coÅ› co BLIP powinien mieÄ‡ od dawna - konto gÅ‚Ã³wne i poboczne.
+   * Bugfix bÅ‚Ä™du kasujÄ…cego linkowanie cytatÃ³w
+   * Lekka poprawka boxa blipalacza - ma wÅ‚asne ID
+   * UsuniÄ™cie obserwowania samego siebie - to juÅ¼ nie dziaÅ‚a, narazie usuniÄ™ty sam link
 
 #### Wersja 2.0:
 
-   * Obserwacja samego siebie jest ju¿ mo¿liwa bez szukania - w ustawieniach dodatku link do uruchomienia, dziêkujê tym którzy próbowali szukaæ w starszych wersjach, rozwi¹zaniem by³y literki "d" oraz "e" w napisie "Blip dopalony przez BLIPalacz"
-   * Numer GG napisany w postaci gg:numer jest zamieniany na postaæ linkuj¹c¹ wraz z obrazkiem statusu, wkrótce obs³uga innych komunikatorów
-   * Mo¿liwoœæ jednorazowego wyœwietlenia polecamy bez prze³adowywania witryny (jeœli masz w³¹czone ukrywanie), opcja dla ciekawskich, jako link w ustawieniach
+   * Obserwacja samego siebie jest juÅ¼ moÅ¼liwa bez szukania - w ustawieniach dodatku link do uruchomienia, dziÄ™kujÄ™ tym ktÃ³rzy prÃ³bowali szukaÄ‡ w starszych wersjach, rozwiÄ…zaniem byÅ‚y literki "d" oraz "e" w napisie "Blip dopalony przez BLIPalacz"
+   * Numer GG napisany w postaci gg:numer jest zamieniany na postaÄ‡ linkujÄ…cÄ… wraz z obrazkiem statusu, wkrÃ³tce obsÅ‚uga innych komunikatorÃ³w
+   * MoÅ¼liwoÅ›Ä‡ jednorazowego wyÅ›wietlenia polecamy bez przeÅ‚adowywania witryny (jeÅ›li masz wÅ‚Ä…czone ukrywanie), opcja dla ciekawskich, jako link w ustawieniach
 
 #### Wersja 1.9:
 
-   * Mo¿liwoœæ ukrycia umieszczonego w niew³aœciwym miejscu boxa Polecamy, do ustawienia w ustawieniach, opcja domyœlnie wy³¹czona
+   * MoÅ¼liwoÅ›Ä‡ ukrycia umieszczonego w niewÅ‚aÅ›ciwym miejscu boxa Polecamy, do ustawienia w ustawieniach, opcja domyÅ›lnie wyÅ‚Ä…czona
 
 #### Wersja 1.8c:
 
-   * Dodanie mo¿liwoœci obserwowania samego siebie. Po klikniêciu na odpowiedni (podpowiem, ¿e link) macie mo¿liwoœæ dodania na blipie do obserwowanych samego siebie. Gdzie jest ten link? Wystarczy dobrze poszukaæ w miejscach pozornie nie daj¹cych siê klikaæ :) Chcecie wskazówkê to piszcie do ^kubofonista, a jak wam siê uda znaleŸæ to na #blipalacz
+   * Dodanie moÅ¼liwoÅ›ci obserwowania samego siebie. Po klikniÄ™ciu na odpowiedni (podpowiem, Å¼e link) macie moÅ¼liwoÅ›Ä‡ dodania na blipie do obserwowanych samego siebie. Gdzie jest ten link? Wystarczy dobrze poszukaÄ‡ w miejscach pozornie nie dajÄ…cych siÄ™ klikaÄ‡ :) Chcecie wskazÃ³wkÄ™ to piszcie do ^kubofonista, a jak wam siÄ™ uda znaleÅºÄ‡ to na #blipalacz
 
 #### Wersja 1.8b:
 
    * Poprawka adresu w sprawdzaniu wersji - sprawdza z kubofonista.net zamiast starej domeny
-   * Mo¿liwoœæ sprawdzenia jednym klikniêciem planów na przysz³e wersje
-   * Automatyczne wyœwietlanie okienka aktualizacji bez koniecznoœci wchodzenia na t¹ stronê
+   * MoÅ¼liwoÅ›Ä‡ sprawdzenia jednym klikniÄ™ciem planÃ³w na przyszÅ‚e wersje
+   * Automatyczne wyÅ›wietlanie okienka aktualizacji bez koniecznoÅ›ci wchodzenia na tÄ… stronÄ™
 
 #### Wersja 1.8:
 
    * Wyszukiwarka blipi.pl jest otwierana w nowym oknie, a po otwarciu w obecnym pole jest czyszczone
-   * Poprawione rozje¿d¿anie siê pola wyszukiwania blipi w niektórych wersjach przegl¹darki
-   * BLIPalacz po tej aktualizacji wyœwietla jednorazowy komunikat z proœb¹ o dodanie ^blipalacz do obserwowanych.
+   * Poprawione rozjeÅ¼dÅ¼anie siÄ™ pola wyszukiwania blipi w niektÃ³rych wersjach przeglÄ…darki
+   * BLIPalacz po tej aktualizacji wyÅ›wietla jednorazowy komunikat z proÅ›bÄ… o dodanie ^blipalacz do obserwowanych.
 
 #### Wersja 1.7b:
 
-   * Link do statystyk powraca, w postaci "stats" i nie psuje ju¿ skryptu
-   * ^macnow opracowa³ fragment zgodnoœciowy kodu pozwalaj¹cy u¿ywaæ wtyczki tak¿e w innej przegl¹darce ni¿ Firefox - Safari z wykorzystaniem GreaseKit
+   * Link do statystyk powraca, w postaci "stats" i nie psuje juÅ¼ skryptu
+   * ^macnow opracowaÅ‚ fragment zgodnoÅ›ciowy kodu pozwalajÄ…cy uÅ¼ywaÄ‡ wtyczki takÅ¼e w innej przeglÄ…darce niÅ¼ Firefox - Safari z wykorzystaniem GreaseKit
 
 #### Wersja 1.7a:
 
-   * Poprawka b³êdu z 1.7 który przy w³¹czonej integracji z blipi psu³ resztê skryptu, usuniêcie linku do statystyk blipi
+   * Poprawka bÅ‚Ä™du z 1.7 ktÃ³ry przy wÅ‚Ä…czonej integracji z blipi psuÅ‚ resztÄ™ skryptu, usuniÄ™cie linku do statystyk blipi
 
 #### Wersja 1.7:
 
@@ -128,30 +128,30 @@ Opis zmian w projekcie wraz z kolejnymi wersjami:
 
 #### Wersja 1.6:
 
-   * Bugfix naprawiaj¹cy zepsute dzia³anie przybornika w powiadomieniach, gdy na cudzym kokpicie powiadomienie dotyczy³o Ciebie
-   * Bugfix niedzia³ania na stronach tagów oraz dmów
+   * Bugfix naprawiajÄ…cy zepsute dziaÅ‚anie przybornika w powiadomieniach, gdy na cudzym kokpicie powiadomienie dotyczyÅ‚o Ciebie
+   * Bugfix niedziaÅ‚ania na stronach tagÃ³w oraz dmÃ³w
    * Lekka kosmetyczna poprawka integracji z blipi.pl
-   * Zamiana linków na kokpicie z [link] na adres do którego prowadz¹
+   * Zamiana linkÃ³w na kokpicie z [link] na adres do ktÃ³rego prowadzÄ…
 
 #### Wersja 1.5:
 
-   * Dodanie integracji z wyszukiwark¹ blipi.pl. Wyszukujemy prosto z kokpitu
+   * Dodanie integracji z wyszukiwarkÄ… blipi.pl. Wyszukujemy prosto z kokpitu
 
 #### Wersja 1.4b:
 
-   * Usuniêcie zmian z wersji 1.4 dla powiadomieñ (i), poniewa¿ one ju¿ to posiadaj¹
+   * UsuniÄ™cie zmian z wersji 1.4 dla powiadomieÅ„ (i), poniewaÅ¼ one juÅ¼ to posiadajÄ…
 
 #### Wersja 1.4a:
 
-   * Bugfix buga psuj¹cego dzia³anie cytatów
+   * Bugfix buga psujÄ…cego dziaÅ‚anie cytatÃ³w
 
 #### Wersja 1.4:
 
-   * Dodanie cytowania zacytowanego przez kogoœ cytatu. Mówi¹c wprost - jeœli X zacytowa³ Y, to mo¿emy bezpoœrednio zacytowaæ Y za pominiêciem cytowania X.
+   * Dodanie cytowania zacytowanego przez kogoÅ› cytatu. MÃ³wiÄ…c wprost - jeÅ›li X zacytowaÅ‚ Y, to moÅ¼emy bezpoÅ›rednio zacytowaÄ‡ Y za pominiÄ™ciem cytowania X.
 
 #### Wersja 1.3a:
 
-   * Bugfix b³êdu nie wykrytego przed publikacj¹ - #### Wersja 1.3 powodowa³a niedzia³anie wtyczki na w³asnym kokpicie, na cudzym dzia³a³o ok. Naprawione
+   * Bugfix bÅ‚Ä™du nie wykrytego przed publikacjÄ… - #### Wersja 1.3 powodowaÅ‚a niedziaÅ‚anie wtyczki na wÅ‚asnym kokpicie, na cudzym dziaÅ‚aÅ‚o ok. Naprawione
 
 #### Wersja 1.3:
 
@@ -159,16 +159,16 @@ Opis zmian w projekcie wraz z kolejnymi wersjami:
 
 #### Wersja 1.2:
 
-   * Kolorowanie tagów (by BLIPCOLORFULLTAGS)
-   * Mo¿liwoœæ dostosowania skryptu do swojego gustu - ka¿da z funkcjonalnoœci daje siê wy³¹czyæ
-   * Automatyczne sprawdzenie dostêpnoœci nowej wersji skryptu
+   * Kolorowanie tagÃ³w (by BLIPCOLORFULLTAGS)
+   * MoÅ¼liwoÅ›Ä‡ dostosowania skryptu do swojego gustu - kaÅ¼da z funkcjonalnoÅ›ci daje siÄ™ wyÅ‚Ä…czyÄ‡
+   * Automatyczne sprawdzenie dostÄ™pnoÅ›ci nowej wersji skryptu
 
 #### Wersja 1.1:
 
-   * Czytelniejszy widok bliposfery: ka¿dy status w nowej linijce, wyœwietlanie nicków autorów, zamienianie cytatów na treœæ
-   * W okienku BLIPalacza na kokpicie wyœwietlana jest aktualna #### Wersja oraz link do sprawdzenia czy jest najnowsza
+   * Czytelniejszy widok bliposfery: kaÅ¼dy status w nowej linijce, wyÅ›wietlanie nickÃ³w autorÃ³w, zamienianie cytatÃ³w na treÅ›Ä‡
+   * W okienku BLIPalacza na kokpicie wyÅ›wietlana jest aktualna #### Wersja oraz link do sprawdzenia czy jest najnowsza
 
 #### Wersja 1.0:
 
    * Powstanie BLIPalacza
-   * Zamienianie cytatów na ich treœæ w statusach oraz powiadomieniach
+   * Zamienianie cytatÃ³w na ich treÅ›Ä‡ w statusach oraz powiadomieniach
