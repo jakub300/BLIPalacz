@@ -15,7 +15,7 @@ blipalacz.on('start', function() {
 				if(d.getAttribute("done") != 1) {
 					var title = d.getAttribute("title");
 					var href = d.innerHTML;
-					//if(cytujcytat == 1) { (!!! WTF?)
+					//if(cytujcytat == 1) {
 						var hreff = d.getAttribute("href");
 						var linkcytuj = '<div align="right" style="font-size:10px"><a href="#" onclick="window.BLIP.dashboardInput.quote(\''+hreff+'\');; return false;">Cytuj</a></div>';
 					//} else {
@@ -27,7 +27,7 @@ blipalacz.on('start', function() {
 							//  $(".content > a")[i].setAttribute("title",'LINK ZAWIERAJACY XSS!!');
 								d.innerHTML = title.replace(/(<([^>]+))/ig,"")+' <font color="red"><b>UWAGA!! LINK ZAWIERA ATAK XSS!!</b></font>';
 							} else if (title == '') {  // nie skrocone
-								//d.innerHTML = thref; (!!! brak definicji zmiennej, co to ma byc?)
+								d.innerHTML = d.getAttribute('href');
 							} else { // normalne linki
 								d.innerHTML = title.replace(/(<([^>]+))/ig,"");
 							}
