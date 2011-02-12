@@ -1,6 +1,11 @@
-$ Kompilator blipalacza
+# Kompilator blipalacza
 
 #### Ustawienia:
 
    * W linii 2 KOMPILATOR.bat podać ścieżkę do PHP
    * W linii 6 cmdapp/generuj.php podać ścieżkę do javy
+
+#### Korzystanie:
+
+   * Uruchomić KOMPILATOR.bat i czytać co się wyświetli
+   * Na linuxie uruchomić: php -f cmdapp/cmd.php
