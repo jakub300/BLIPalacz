@@ -1,0 +1,6 @@
+$ Kompilator blipalacza
+
+#### Ustawienia:
+
+   * W linii 2 KOMPILATOR.bat podać ścieżkę do PHP
+   * W linii 6 cmdapp/generuj.php podać ścieżkę do javy
