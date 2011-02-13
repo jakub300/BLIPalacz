@@ -6,7 +6,7 @@ Jest to rozszerzenie do GreaseMonkey'a w przeglądarce Firefox oraz GreaseKit'a 
 
 ### Obecne funkcjonalności
 
-Funkcjonalności zostały wypisane na stronie projektu: [bp]
+Funkcjonalności zostały wypisane na stronie projektu: [http://kubofonista.net/blipalacz][bp]
 
 ### Changelog
 
