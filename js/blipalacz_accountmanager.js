@@ -4,6 +4,10 @@ blipalacz.on('start', function() {
 
 	//if(!kom) {return;}
 
+	if(!document.querySelector('#observed-and-observing-box')) {
+		return;
+	}
+
 	var mdata = blipalacz.storage.get('menedzer-data');
 	if(mdata == undefined) { blipalacz.storage.set('menedzer-data',''); mdata = ''; }
 	var passes = mdata.split('!@!');
@@ -24,6 +28,7 @@ blipalacz.on('start', function() {
 	div.id = 'blipalacz-manager-box';
 	div.innerHTML = '<div class="transparent-box-rounding"></div><div class="transparent-box"><ul class="tab-bar"><li><h2 class="single">Menedzer kont BLIPowych (<a href="javascript:void(0);" id="menedzer-info">?</a>)</h2></li></ul><center><font style="color:#222222; font-size:85%;">'+menedzertresc+'</font></center></div><div class="transparent-box-rounding-bottom"></div>';
 	//	menedzerkont ='null';
+
 	document.querySelector('#observed-and-observing-box').appendChild(div);
 
 	document.querySelector("#menedzer-info").addEventListener('click', function() { alert('Menedzer kont BLIPowych to dodatek dostarczony przez BLIPalacza. \r\n Umozliwia on zarzadzanie swoimi blipowymi kontami. \r\n Nie musisz pamietac hasel do kont swoich botów. Poprostu je dodaj i klikaj "Zaloguj sie" ;) \r\n\r\n Prywatnosc: Hasla sa zapisywane TYLKO w twojej przegladarce i NIGDY NIE SA NIGDZIE PRZESYLANE'); return false;	}, false);

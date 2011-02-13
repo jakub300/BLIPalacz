@@ -39,10 +39,16 @@ blipalacz._start = function() {
 
 	blipalacz.token = document.querySelector('#authenticity_token').innerHTML.replace('"','').replace('"','').replace(/\n/,'').replace(/\n/,'').replace(/ /gi,'');
 
-	blipalacz.nick = document.querySelector("#profile-info > h1").innerHTML;
+	if(document.querySelector("#profile-info > h1")) {
+		blipalacz.nick = document.querySelector("#profile-info > h1").innerHTML;
+	} else {
+		blipalacz.nick = false;
+	}
 
-	document.querySelector('#observed-and-observing-box').innerHTML += '<div id="blipalacz-box" style=""><div class="transparent-box-rounding"></div><div class="transparent-box"><ul class="tab-bar"><li><h2 class="single">Blip dopalony przez <a href="http://kubofonista.net/blipalacz">BLIPALACZ</a></h2></li></ul><center><font style="color:#222222; font-size:85%; margin:5px;">Uzywasz wersji: '+blipalacz.version+'<br />???<div id="blipalacz-ver"></div><div id="blipalacz-workplace"></div><font size=1>BLIPalacz uzyty juz ??? razy :)<br />&copy; 2010 <a href="http://blip.pl/users/kubofonista/dashboard">^Kubofonista</a></font><br /><font size="1"><a id="blipalacz-showsets" href="javascript:void(0);" title="Wyswietla konfiguracje BLIPalacza">Ustawienia wtyczki &raquo;</a></font><br /><div id="blipalacz-sets" style="display:none"></div></font></center></div><div class="transparent-box-rounding-bottom"></div></div>'
-	document.querySelector('#blipalacz-showsets').addEventListener('click', blipalacz._togglesettings, false)
+	if(document.querySelector('#observed-and-observing-box')) {
+		document.querySelector('#observed-and-observing-box').innerHTML += '<div id="blipalacz-box" style=""><div class="transparent-box-rounding"></div><div class="transparent-box"><ul class="tab-bar"><li><h2 class="single">Blip dopalony przez <a href="http://kubofonista.net/blipalacz">BLIPALACZ</a></h2></li></ul><center><font style="color:#222222; font-size:85%; margin:5px;">Uzywasz wersji: '+blipalacz.version+'<br />???<div id="blipalacz-ver"></div><div id="blipalacz-workplace"></div><font size=1>BLIPalacz uzyty juz ??? razy :)<br />&copy; 2010 <a href="http://blip.pl/users/kubofonista/dashboard">^Kubofonista</a></font><br /><font size="1"><a id="blipalacz-showsets" href="javascript:void(0);" title="Wyswietla konfiguracje BLIPalacza">Ustawienia wtyczki &raquo;</a></font><br /><div id="blipalacz-sets" style="display:none"></div></font></center></div><div class="transparent-box-rounding-bottom"></div></div>'
+		document.querySelector('#blipalacz-showsets').addEventListener('click', blipalacz._togglesettings, false)
+	}
 
 	blipalacz._event('start');
 
@@ -92,6 +98,10 @@ blipalacz.settings.add = function(name, def, desc) {
 		return false;
 	}
 	blipalacz._set[name] = def;
+
+	if(!document.querySelector('#blipalacz-sets')) {
+		return true;
+	}
 
 	var str = document.createElement('div');
 	str.innerHTML = desc+' - '

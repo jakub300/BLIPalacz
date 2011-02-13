@@ -4,6 +4,10 @@ blipalacz.on('start', function() {
 
 	if(!kom) {return;}
 
+	if(!document.querySelector('#observed-and-observing-box')) {
+		return;
+	}
+
 	var element = document.createElement('center')
 	var header = document.createElement('h4')
 	header.id = 'online_counter'
