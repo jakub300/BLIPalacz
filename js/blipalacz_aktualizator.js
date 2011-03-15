@@ -1,4 +1,3 @@
-blipalacz.on('start', blipalacz.p.aktualizator.sprawdz);
 blipalacz.p.aktualizator = {};
 blipalacz.p.aktualizator.sprawdz = function() {
 
@@ -10,13 +9,14 @@ blipalacz.p.aktualizator.sprawdz = function() {
 		method: 'GET',
 		url: blipalacz.p.aktualizator.url[blipalacz.version_type],
 		onload: function(responseDetails) {
+			//alert(responseDetails.responseText);
 			try {
 				var json = JSON.parse(responseDetails.responseText);
 				if(json['timestamp'] > blipalacz.version_timestamp) {
 					alert("Strzałka! Dostępna jest nowsza wersja. Po kliknieciu OK ujrzysz okienko instalacyjne :)");
 					window.location = blipalacz.p.aktualizator.urld[blipalacz.version_type];
 				}
-			} catch(err) {}
+			} catch(err) {/*alert(err);*/}
 		}
 	});
 }
@@ -32,3 +32,4 @@ blipalacz.p.aktualizator.urld['stable'] = 'https://github.com/kubofonista/BLIPal
 blipalacz.p.aktualizator.urld['nightly'] = 'https://github.com/kubofonista/BLIPalacz/raw/nightly/blipalacz.user.js';
 blipalacz.p.aktualizator.urld['new-alpha'] = 'https://github.com/jakub300/BLIPalacz/raw/nightly/blipalacz.user.js';
 //blipalacz.p.aktualizator.urld['new-alpha'] = 'https://github.com/kubofonista/BLIPalacz/raw/new-alpha/blipalacz.user.js';
+blipalacz.on('start', blipalacz.p.aktualizator.sprawdz);
