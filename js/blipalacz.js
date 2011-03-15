@@ -10,7 +10,9 @@
 //us @include		http://blip.pl/tags/*
 
 blipalacz = {};
-blipalacz.version = 'j3.3b'
+blipalacz.version = 'nieznana'; // nie dotykać! uzupełniane automatycznie podczas generowania!
+blipalacz.version_timestamp = 0; // nie dotykać! uzupełniane automatycznie podczas generowania!
+blipalacz.version_type = 'nieznana' // nie dotykać! uzupełniane automatycznie podczas generowania!
 blipalacz._events = {};
 blipalacz._set = {};
 blipalacz._set_val = {}
